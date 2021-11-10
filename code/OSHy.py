@@ -6,13 +6,15 @@ import subprocess
 
 class Target_img():
 
-    def __init__(self, img_file:str, denoise:bool, n4bias:bool, out_dir:str, 
-                 oshy_data):
+    def __init__(self, img_file:str, crop: bool, weighting: str, denoise:bool, 
+                 b1_bias:bool, out_dir:str, oshy_data):
 
         """
         img_file (str): File path to target image. File extension must be nii.gz
+        crop (bool): Target is cropped if True.
+        weighting (str): The weighting of the target image.
         denoise (bool): Target is denoised if True.
-        n4bias (bool): Target is N4 bias corrected if True.
+        b1_bias (bool): Target is B1 bias field corrected if True.
         mosaic (bool): Mosaic image will be generated if True.
         out_dir (str): File path to output directory.
         oshy_data (OSHy_data): An object of the OSHy_data class.
@@ -21,31 +23,36 @@ class Target_img():
         print(f"Reading {img_file}.")
 
         self.target_img = ants.image_read(img_file)
+        self.target_processed = self.target_img
+        self.weighting = weighting
         self.sub = img_file.split("/")[-1].split("_")[0]
         self.outdir = out_dir.strip()
         self.oshy_data = oshy_data
+        self.preprocess = ""
 
         #Create sub folder in output directory
         if not os.path.exists(f"{self.outdir}/{self.sub}"):
             os.mkdir(f"{self.outdir}/{self.sub}")
 
         if denoise:
-            self.run_denoise()
+            self.target_processed = self.run_denoise()
+            self.preprocess += "denoised_"
         
-        if n4bias:
-            self.run_n4bias()
+        if b1_bias:
+            self.target_processed = self.run_b1_correction()
+            self.preprocess += "bias-corrected_"
 
-        self.native_box = self.get_native_box()
-        self.target_cropped = self.crop_target()
-        ants.image_write(
-            self.target_cropped, 
-            filename=f"{self.outdir}/{self.sub}/{self.sub}"\
-                      "_cropped_T1w.nii.gz")
+        if crop:
+            self.native_box = self.get_native_box()
+            self.target_processed = self.crop_target()
+            self.preprocess += "cropped_"
+            ants.image_write(
+                self.target_processed, 
+                filename=f"{self.outdir}/{self.sub}/{self.sub}"\
+                         f"_{self.preprocess}{self.weighting}.nii.gz")
+                          
+
         self.segmentation = None
-        
-    def __repr__(self):
-        
-        print(self.target_img)
     
     def run_denoise(self):
         """Denoises image.
@@ -61,10 +68,10 @@ class Target_img():
 
         return(denoised_img)
 
-    def run_n4bias(self):
-        """Runs N4 bias field correction.
+    def run_b1_correction(self):
+        """Runs B1+ bias field correction.
 
-        Runs ants.n4_bias_field_correction on the target image.
+        Runs MriResearchTools on the target image.
 
         Return ANTsImage: An image that has been N4 bias field corrected.
         """
@@ -90,8 +97,13 @@ class Target_img():
         template = self.oshy_data.template
         template_box = self.oshy_data.template_box
 
-        registered_dict = ants.registration(template, self.target_img, 'SyN', 
-        reg_iterations = (50, 25, 0))
+        if self.weighting == "T1w":
+            transform_type = "SyN"
+        elif self.weighting == "T2w":
+            transform_type = "SyNCC"
+
+        registered_dict = ants.registration(template, self.target_img, 
+        transform_type, reg_iterations = (50, 25, 0))
 
         warped_box = ants.apply_transforms(
             fixed = self.target_img, 
@@ -129,7 +141,8 @@ class Target_img():
             "antsJointLabelFusion2.sh", 
             "-d", "3",
             "-o", f"{self.outdir}/{self.sub}/{self.sub}_",
-            "-t", f"{self.outdir}/{self.sub}/{self.sub}_cropped_T1w.nii.gz"]
+            "-t", f"{self.outdir}/{self.sub}/{self.sub}_{self.preprocess}"\
+                  f"{self.weighting}.nii.gz"]
 
         jlf2_command = self.get_atlases(jlf2_command)
 
@@ -181,7 +194,7 @@ class Target_img():
 
         print(f"Generating a mosaic of {self.sub}.")
 
-        ants.plot(self.target_cropped, self.segmentation, overlay_cmap='jet', 
+        ants.plot(self.target_processed, self.segmentation, overlay_cmap='jet', 
         overlay_alpha=80, axis=1, slices=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9], 
         title=self.sub, 
         filename=f"{self.outdir}/{self.sub}/{self.sub}_mosaic.png")
@@ -195,16 +208,17 @@ class Target_img():
         Return None
         """
 
-        imath_arguments = ["ImageMath", "3", 
+        imageMath_arguments = ["ImageMath", "3", 
         f"{self.outdir}/{self.sub}/{self.sub}_volumes.txt", "LabelStats", 
         glob.glob(f"{self.outdir}/{self.sub}/*Label*")[0],
-        f"{self.outdir}/{self.sub}/{self.sub}_cropped_T1w.nii.gz"]
+        f"{self.outdir}/{self.sub}/{self.sub}_{self.preprocess}"\
+        f"{self.weighting}.nii.gz"]
 
-        imath_process = subprocess.Popen(
-            imath_arguments, stdout=subprocess.PIPE, stdin=subprocess.PIPE, 
+        ImageMath_process = subprocess.Popen(
+            imageMath_arguments, stdout=subprocess.PIPE, stdin=subprocess.PIPE, 
             stderr=subprocess.STDOUT)
 
-        imath_process.wait()
+        ImageMath_process.wait()
 
     def resample_segmentation(self):
         """Resamples segmentation to original target.
@@ -246,7 +260,7 @@ class Target_img():
 
 class OSHy_data():
 
-    def __init__(self, tesla:str, bimodal:bool):
+    def __init__(self, tesla:str, weighting:str, bimodal:bool, crop:bool):
 
         """
         tesla (str): Magnet strenght of images.
@@ -254,11 +268,17 @@ class OSHy_data():
         """
 
         self.tesla = tesla
+        self.weighting = weighting
         self.bimodal = bimodal
         self.template = self.get_template()
         self.template_box = self.get_template_box()
         self.atlas_list = self.get_atlases()
         self.label_list = self.get_labels()
+
+        if crop:
+            self.crop = "cropped"
+        else:
+            self.crop = "whole"
 
     def get_template(self):
         """Retrieves the template.
@@ -296,9 +316,10 @@ class OSHy_data():
         """
 
         if self.bimodal:
-            atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/*")
+            atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/*{self.crop}*")
         else:
-            atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/*T1w*")
+            atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/"\
+                                    f"*{self.crop}*{self.weighting}*")
 
         return(atlas_files)
 
@@ -310,7 +331,7 @@ class OSHy_data():
         Return list: A list of strings.
         """
 
-        label_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/*label*")
+        label_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/*{self.crop}*label*")
 
         if self.bimodal:
             label_files.extend(label_files)
@@ -339,34 +360,53 @@ if __name__ == "__main__":
     my_args.add_argument("-t", "--target", required=True, nargs="+",
         help = "A string or strings in a list pointing to the target image(s)."\
                " Must end in nii.gz.")
-    my_args.add_argument("-d", "--denoise", required=True,
-        help = "A boolean indicating if denoising is to be run on the target"\
-             " image.")
-    my_args.add_argument("-n", "--n4bias", required=True,
-        help="A boolean indicating if N4 bias correction is to be run on the"\
-             " target image.")
-    my_args.add_argument("-m", "--mosaic", required=True,
-        help = "A boolean indicating if a mosaic image is to be plotted after"\
-               " running Joint Label Fusion.")
     my_args.add_argument("-o", "--outdir", required=True,
         help = "A string pointing to the output directory.")
-    my_args.add_argument("-x", "--tesla", required=True,
-        help = "An integer (either 3 or 7) indicating the magnet strength.")
-    my_args.add_argument("-b", "--bimodal", required=True,
-        help = "A boolean indicating if bimodal priors are to be used."\
-               " If FALSE, then only unimodal priors will be used.")
-    
+    my_args.add_argument("-c", "--crop", default=True,
+        help = "Optional. A boolean indicating if the target image and priors"\
+               " are to be cropped. If False, whole-image priors will be used,"\
+               " which will improve the segmentation but significantly"\
+               " increase the runtime. (default: True)")
+    my_args.add_argument("-w", "--weighting", default="T1w",
+        help = "A string indicating the weighting of the input image(s)."\
+               " This can be either T1w or T2w. (default: T1w")
+    my_args.add_argument("-d", "--denoise", default=True,
+        help = "Optional. A boolean indicating if denoising is to be run on"\
+            " the target image. (default: True)")
+    my_args.add_argument("-f", "--fieldCorrection", default=True,
+        help="Optional. A boolean indicating if B1 bias field correction is to"\
+             " be run on the target image. (default: True)")
+    my_args.add_argument("-m", "--mosaic", default=True,
+        help = "Optional. A boolean indicating if a mosaic image is to be"\
+               " plotted after running Joint Label Fusion. (default: True)")
+    my_args.add_argument("-x", "--tesla", default=3,
+        help = "Optional. An integer (either 3 or 7) indicating the field"\
+            " strength. (default: 3)")
+    my_args.add_argument("-b", "--bimodal", default=False,
+        help = "Optional. A boolean indicating if bimodal priors are to be"\
+               " used. If FALSE, then only unimodal priors (specified in"\
+               " --weighting) will be used.(default: False)")
+    my_args.add_argument("-n", "--nthreads", default=6,
+        help = "Optional. An integer indicating the number of threads. This"\
+               " is passed to the global variable"\
+               " ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS. (default: 6)")    
     args = vars(my_args.parse_args())
 
-    #f = open(f"{args['outdir']}/OSHy_volumes.txt", "x")
+    os.environ['ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS'] = args['nthreads']
 
-    oshy_dat = OSHy_data(args['tesla'], 
-                         convert_to_bool(args['bimodal']))
+    oshy_dat = OSHy_data(tesla = args['tesla'], 
+                         weighting = args['weighting'],
+                         bimodal = convert_to_bool(args['bimodal']),
+                         crop = convert_to_bool(args['crop']))
+
+
 
     for target in args['target']:
         my_image = Target_img(img_file = target, 
+        crop = convert_to_bool(args['crop']),
+        weight = convert_to_bool(args['weighting']),
         denoise = convert_to_bool(args['denoise']), 
-        n4bias = convert_to_bool(args['n4bias']),
+        b1_bias = convert_to_bool(args['fieldCorrection']),
         out_dir = args['outdir'],
         oshy_data = oshy_dat)
 
