@@ -17,6 +17,7 @@ You have the option of running OSHy-X via NeuroDesk, a Docker container by itsel
 ### Neurodesk
 
 ### Docker
+https://hub.docker.com/repository/docker/jerync/oshyx_0.1.0
 
 ### Singularity
 
@@ -28,17 +29,20 @@ You have the option of running OSHy-X via NeuroDesk, a Docker container by itsel
 ### Docker
 
 ```
-Usage: OSHy.py [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
+Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1.0:20211112 
+               [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
 
 Options:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   -t TARGET [TARGET ...], --target TARGET [TARGET ...]
-                        A string or strings in a list pointing to the target
-                        image(s). Must end in nii.gz.
+                        A string or list of strings pointing to the target
+                        image(s). Must be a NIfTI file.
   -o OUTDIR, --outdir OUTDIR
-                        A string pointing to the output directory.
+                        A string pointing to the output directory. Please
+                        ensure this is within the mounted volume (Specified
+                        with the -v flag for the docker run command.
   -c CROP, --crop CROP  Optional. A boolean indicating if the target image and
                         priors are to be cropped. If False, whole-image priors
                         will be used, which will improve the segmentation but
@@ -68,7 +72,12 @@ Options:
   -n NTHREADS, --nthreads NTHREADS
                         Optional. An integer indicating the number of threads.
                         This is passed to the global variable
-                        ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS. (default: 6)
-```
+                        ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS and the -j flag
+                        in Joint Label Fusion. (default: 6)```
 
 ### Singularity
+
+## Output
+
+All output is written to the output directory (specified using the `-o/--outdir` flag.)
+
