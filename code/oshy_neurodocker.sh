@@ -15,10 +15,10 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --entrypoint "python -u /OSHy/OSHy.py" \
 > OSHy.Dockerfile
 
-docker build --tag jerync/oshyx_0.1.0:20211112 --file OSHy.Dockerfile .
+docker build --tag jerync/oshyx_0.1:20211114 --file OSHy.Dockerfile .
 
 # Example of running OSHy in "one line of code".
 # docker run --rm \
-# -v /path/to/data:/data oshyx_0.1.0 \
+# -v /path/to/data:/data oshyx_0.1 \
 # -t /test/sub-H0101_ses-01_T1w.nii.gz /test/sub-H0112_ses-01_T1w.nii.gz /test/sub-P0004_ses-01_T1w.nii.gz /test/sub-P0016_ses-01_T1w.nii.gz /test/sub-H0108_ses-01_T1w.nii.gz /test/sub-H0115_ses-01_T1w.nii.gz /test/sub-P0008_ses-01_T1w.nii.gz /test/sub-H0111_ses-01_T1w.nii.gz /test/sub-P0003_ses-01_T1w.nii.gz /test/sub-P0011_ses-01_T1w.nii.gz \
 # -o /data/out -d True -n True -m True -x 7 -b False

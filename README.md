@@ -16,11 +16,16 @@ You have the option of running OSHy-X via NeuroDesk, a Docker container by itsel
 
 ### Neurodesk
 
+Follow instructions [here](https://neurodesk.github.io/docs/neurodesktop/getting-started/) to install Neurodesk.
+
 ### Docker
-https://hub.docker.com/repository/docker/jerync/oshyx_0.1.0
+
+1. Install Docker [here](https://docs.docker.com/get-docker/).
+2. Open a terminal and run `docker pull jerync/oshyx_0.1:20211114`
 
 ### Singularity
 
+***
 
 ## Usage
 
@@ -29,7 +34,7 @@ https://hub.docker.com/repository/docker/jerync/oshyx_0.1.0
 ### Docker
 
 ```
-Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1.0:20211112 
+Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211114 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
@@ -73,11 +78,26 @@ Options:
                         Optional. An integer indicating the number of threads.
                         This is passed to the global variable
                         ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS and the -j flag
-                        in Joint Label Fusion. (default: 6)```
+                        in Joint Label Fusion. (default: 6)
+```
 
 ### Singularity
+
+***
 
 ## Output
 
 All output is written to the output directory (specified using the `-o/--outdir` flag.)
 
+Contents of the output include:
+
+* `sub-XX_Labels.nii.gz`: Output from Joint Label Fusion. The label file for the left and right hemispheres of the Hypothalamus and Fornix. If `--crop` is `True` then this label file will also be cropped. The labels are as follows:
+    1. Left Hypothalamus
+    2. Right Hypothalamus
+    3. Right Fornix
+    4. Left Fornix
+* `sub-XX_ressampled_Labels.nii.gz`: sub-XX_Labels.nii.gz but resampled to the input target image.
+* `sub-XX_hypothalamus.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only hypothalamus labels.
+* `sub-XX_fornix.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only fornix labels.
+* `sub-XX_mosaic.png`: A 16 slice coronal visualisation of the segmentation.
+* `sub-XX_volumes.csv`: Volumes of the four labels (as described above). Units for volume are in mm<sup>3</sup>.

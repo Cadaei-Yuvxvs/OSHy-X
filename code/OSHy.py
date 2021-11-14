@@ -414,7 +414,9 @@ def convert_to_bool(b_str:str):
 if __name__ == "__main__":
 
     print(
-        "\nOSHy-X v0.1.0\n"\
+        "\nOSHy-X v0.1\n"\
+        "MIT License\n"
+        "Copyright (c) 2021 Jeryn\n"
         "Visit https://github.com/Cadaei-Yuvxvs/OSHy-X for more information.\n")
 
     my_args = argparse.ArgumentParser()
@@ -468,6 +470,8 @@ if __name__ == "__main__":
               f"Proceeding with {max_cpus_possible} threads.")
 
         args['nthreads'] = str(max_cpus_possible)
+    else:
+        print(f"Running with {args['nthreads']} threads.")
 
     os.environ['ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS'] = args['nthreads']
 
