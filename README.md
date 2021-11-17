@@ -21,17 +21,23 @@ Follow instructions [here](https://neurodesk.github.io/docs/neurodesktop/getting
 ### Docker
 
 1. Install Docker [here](https://docs.docker.com/get-docker/).
-2. Open a terminal and run `docker pull jerync/oshyx_0.1:20211114`
+2. Open a terminal and run:
+
+`docker pull jerync/oshyx_0.1:20211114`
+To pull the container. Or run: 
+
+`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.1:20211114 --target /data/input_file.nii.gz --outdir /data/output_directory`
 
 ### Singularity
-
-***
+1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html)
+2. Open a terminal and run 
+`singularity pull docker://jerync/oshyx_0.1:20211114 oshyx_0.1.sif`
+To pull the container. 
 
 ## Usage
 
-### Neurodesk
 
-### Docker
+### Docker and Singularity
 
 ```
 Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211114 
@@ -81,9 +87,6 @@ Options:
                         in Joint Label Fusion. (default: 6)
 ```
 
-### Singularity
-
-***
 
 ## Output
 
