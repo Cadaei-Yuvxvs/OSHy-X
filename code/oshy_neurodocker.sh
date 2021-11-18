@@ -15,7 +15,7 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --entrypoint "python -u /OSHy/OSHy.py" \
 > OSHy.Dockerfile
 
-docker build --tag jerync/oshyx_0.1:20211114 --file OSHy.Dockerfile .
+docker build --tag jerync/oshyx_0.1:20211118 --file OSHy.Dockerfile .
 
 # Example of running OSHy in "one line of code".
 # docker run --rm \

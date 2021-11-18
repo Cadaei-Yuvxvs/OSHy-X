@@ -103,7 +103,7 @@ class Target_img():
             f"target = niread(\"{preprocess_nifti}\"); "\
             f"bcorrect = makehomogeneous(target); "\
             f"savenii(bcorrect, \"{self.sub}_tmp\","\
-            f" \"{self.sub_outdir}\");"]
+            f" \"{self.sub_outdir}\", header(target));"]
 
         print("Running makehomogeneous from MriResearchTools.")
 
@@ -116,11 +116,19 @@ class Target_img():
 
         mriTools_process.wait()
 
-        self.target_processed = ants.image_read(preprocess_nifti)
+        mriTools_out = mriTools_process.communicate()
 
-        # Cleanup
-        os.remove(preprocess_nifti)
-        os.remove(preprocess_nifti[:-3])
+        print(mriTools_out[0])
+
+        if mriTools_out[1]:
+            print(mriTools_out[1])
+
+        try:
+            self.target_processed = ants.image_read(preprocess_nifti[:-3])
+            os.remove(preprocess_nifti)
+            os.remove(preprocess_nifti[:-3])
+        except:
+            print("B1 bias field correction may have failed.")
 
     def get_native_box(self):
         """Generates a native bounding box.
@@ -195,6 +203,7 @@ class Target_img():
                                        universal_newlines=True)
 
         jlf_process.wait()
+        
         jlf_out = jlf_process.communicate()
 
         print(jlf_out[0])
@@ -371,7 +380,7 @@ class OSHy_data():
 
         if self.bimodal:
             atlas_files = glob.glob(
-                f"/OSHy/atlases/{self.tesla}T/*{self.crop}*")
+                f"/OSHy/atlases/{self.tesla}T/*{self.crop}*w.nii.gz")
         else:
             atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/"\
                                     f"*{self.crop}*{self.weighting}*")

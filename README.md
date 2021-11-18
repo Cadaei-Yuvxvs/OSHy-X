@@ -23,15 +23,15 @@ Follow instructions [here](https://neurodesk.github.io/docs/neurodesktop/getting
 1. Install Docker [here](https://docs.docker.com/get-docker/).
 2. Open a terminal and run:
 
-`docker pull jerync/oshyx_0.1:20211114`
+`docker pull jerync/oshyx_0.1:20211118`
 To pull the container. Or run: 
 
-`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.1:20211114 --target /data/input_file.nii.gz --outdir /data/output_directory`
+`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.1:20211118 --target /data/input_file.nii.gz --outdir /data/output_directory`
 
 ### Singularity
-1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html)
+1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html).
 2. Open a terminal and run 
-`singularity pull docker://jerync/oshyx_0.1:20211114 oshyx_0.1.sif`
+`singularity pull docker://jerync/oshyx_0.1:20211118 oshyx_0.1.sif`
 To pull the container. 
 
 ## Usage
@@ -40,7 +40,12 @@ To pull the container.
 ### Docker and Singularity
 
 ```
-Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211114 
+Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211118 
+               [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
+               [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
+               [-b BIMODAL] [-n NTHREADS]
+
+       singularity run -B /path/to/data:/data oshyx_0.1.sif 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
