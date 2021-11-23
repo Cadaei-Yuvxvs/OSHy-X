@@ -435,7 +435,7 @@ if __name__ == "__main__":
         default="/OSHy/sub-50_cropped_T1w.nii.gz", nargs="+",
         help = "A string or list of strings pointing to the target image(s)."\
                " Must be a NIfTI file.")
-    my_args.add_argument("-o", "--outdir", required=True,
+    my_args.add_argument("-o", "--outdir", default="/OSHy",
         help = "A string pointing to the output directory. Please ensure "\
                "this is within the mounted volume (Specified with the -v flag "\
                "for the docker run command.")
@@ -471,7 +471,6 @@ if __name__ == "__main__":
     args = vars(my_args.parse_args())
 
     if args['target'] == "sub-50_cropped_T1w.nii.gz":
-        args['output'] = "/OSHy"
         args['crop'] = "False"
         args['denoise'] = "False"
         args['fieldCorrection'] = "False"
@@ -479,6 +478,9 @@ if __name__ == "__main__":
         print("No target image was specified. Proceeding with example "\
               "image. Cropping, denoising, and field correction will "\
               "be skipped.")
+
+    if args['outdir'] == "/OSHy":
+        print("Warning: Please ensure you specify your own output directory.")
 
     # Only allowing 6GB per CPU
     available_ram_gb = psutil.virtual_memory().available / 1e9
