@@ -471,12 +471,7 @@ if __name__ == "__main__":
     args = vars(my_args.parse_args())
 
     if args['target'][0] == "/OSHy/sub-50_T1w.nii.gz":
-        args['denoise'] = "False"
-        args['fieldCorrection'] = "False"
-
-        print("No target image was specified. Proceeding with example "\
-              "image. Denoising, and field correction will "\
-              "be skipped.")
+        print("No target image was specified. Proceeding with example image.")
 
     if args['outdir'] == "/OSHy":
         print("Warning: Please ensure you specify your own output directory.")
