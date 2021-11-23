@@ -470,7 +470,7 @@ if __name__ == "__main__":
                "in Joint Label Fusion. (default: 6)")    
     args = vars(my_args.parse_args())
 
-    if args['target'] == "sub-50_cropped_T1w.nii.gz":
+    if args['target'] == "/OSHy/sub-50_cropped_T1w.nii.gz":
         args['crop'] = "False"
         args['denoise'] = "False"
         args['fieldCorrection'] = "False"
