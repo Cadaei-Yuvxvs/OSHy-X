@@ -12,10 +12,11 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --copy $( find ./data/atlases/3T -iname *gz ) /OSHy/atlases/3T/ \
 --copy $( find ./data/atlases/7T -iname *gz ) /OSHy/atlases/7T/ \
 --copy $( find ./data/templates -iname *gz ) /OSHy/templates/ \
+--copy ./data/sub-50_cropped_T1w.nii.gz /OSHy \
 --entrypoint "python -u /OSHy/OSHy.py" \
 > OSHy.Dockerfile
 
-docker build --tag jerync/oshyx_0.1:20211118 --file OSHy.Dockerfile .
+docker build --tag jerync/oshyx_0.1:20211123 --file OSHy.Dockerfile .
 
 # Example of running OSHy in "one line of code".
 # docker run --rm \

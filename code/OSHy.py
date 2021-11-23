@@ -432,7 +432,7 @@ if __name__ == "__main__":
     my_args = argparse.ArgumentParser()
 
     my_args.add_argument("-t", "--target", 
-        default="/OSHy/sub-50_cropped_T1w.nii.gz", nargs="+",
+        default=["/OSHy/sub-50_cropped_T1w.nii.gz"], nargs="+",
         help = "A string or list of strings pointing to the target image(s)."\
                " Must be a NIfTI file.")
     my_args.add_argument("-o", "--outdir", default="/OSHy",
@@ -470,7 +470,7 @@ if __name__ == "__main__":
                "in Joint Label Fusion. (default: 6)")    
     args = vars(my_args.parse_args())
 
-    if args['target'] == "/OSHy/sub-50_cropped_T1w.nii.gz":
+    if args['target'][0] == "/OSHy/sub-50_cropped_T1w.nii.gz":
         args['crop'] = "False"
         args['denoise'] = "False"
         args['fieldCorrection'] = "False"
