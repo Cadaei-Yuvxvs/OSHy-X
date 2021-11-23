@@ -471,12 +471,11 @@ if __name__ == "__main__":
     args = vars(my_args.parse_args())
 
     if args['target'][0] == "/OSHy/sub-50_cropped_T1w.nii.gz":
-        args['crop'] = "False"
         args['denoise'] = "False"
         args['fieldCorrection'] = "False"
 
         print("No target image was specified. Proceeding with example "\
-              "image. Cropping, denoising, and field correction will "\
+              "image. Denoising, and field correction will "\
               "be skipped.")
 
     if args['outdir'] == "/OSHy":
