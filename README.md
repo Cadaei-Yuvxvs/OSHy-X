@@ -23,15 +23,15 @@ Follow instructions [here](https://neurodesk.github.io/docs/neurodesktop/getting
 1. Install Docker [here](https://docs.docker.com/get-docker/).
 2. Open a terminal and run:
 
-`docker pull jerync/oshyx_0.1:20211118`
+`docker pull jerync/oshyx_0.1:20211126`
 To pull the container. Or run: 
 
-`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.1:20211118 --target /data/input_file.nii.gz --outdir /data/output_directory`
+`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.1:20211126 --target /data/input_file.nii.gz --outdir /data/output_directory`
 
 ### Singularity
 1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html).
 2. Open a terminal and run 
-`singularity pull docker://jerync/oshyx_0.1:20211118 oshyx_0.1.sif`
+`singularity pull docker://jerync/oshyx_0.1:20211126 oshyx_0.1.sif`
 To pull the container. 
 
 ## Usage
@@ -40,7 +40,7 @@ To pull the container.
 ### Docker and Singularity
 
 ```
-Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211118 
+Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.1:20211126 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
@@ -54,7 +54,8 @@ Options:
   -h, --help            Show this help message and exit
   -t TARGET [TARGET ...], --target TARGET [TARGET ...]
                         A string or list of strings pointing to the target
-                        image(s). Must be a NIfTI file.
+                        image(s). Must be a NIfTI file. For a test run,
+                        specify /OSHy/sub-test.nii.gz
   -o OUTDIR, --outdir OUTDIR
                         A string pointing to the output directory. Please
                         ensure this is within the mounted volume (Specified
