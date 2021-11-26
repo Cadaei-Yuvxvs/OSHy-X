@@ -196,7 +196,8 @@ class Target_img():
         print("Running Joint Label Fusion.")
 
         if not self.crop:
-            print("Using whole-brain image as input. This may take a while.")
+            print("Using whole-brain image and priors as input. This may take "\
+                  "a while.")
 
         jlf_process = subprocess.Popen(jlf2_command, stdout=subprocess.PIPE, 
                                        stdin=subprocess.PIPE, 
@@ -381,7 +382,7 @@ class OSHy_data():
 
         if self.bimodal:
             atlas_files = glob.glob(
-                f"/OSHy/atlases/{self.tesla}T/*{self.crop}*w.nii.gz")
+                f"/OSHy/atlases/{self.tesla}T/*{self.crop}*w*.nii.gz")
         else:
             atlas_files = glob.glob(f"/OSHy/atlases/{self.tesla}T/"\
                                     f"*{self.crop}*{self.weighting}*")
@@ -432,10 +433,11 @@ if __name__ == "__main__":
     my_args = argparse.ArgumentParser()
 
     my_args.add_argument("-t", "--target", 
-        default=["/OSHy/sub-50_T1w.nii.gz"], nargs="+",
+        default=["None"], nargs="+",
         help = "A string or list of strings pointing to the target image(s)."\
-               " Must be a NIfTI file.")
-    my_args.add_argument("-o", "--outdir", default="/OSHy",
+               " Must be a NIfTI file. For a test run, specify "\
+               "/OSHy/sub-test.nii.gz")
+    my_args.add_argument("-o", "--outdir", default="None",
         help = "A string pointing to the output directory. Please ensure "\
                "this is within the mounted volume (Specified with the -v flag "\
                "for the docker run command.")
@@ -470,49 +472,50 @@ if __name__ == "__main__":
                "in Joint Label Fusion. (default: 6)")    
     args = vars(my_args.parse_args())
 
-    if args['target'][0] == "/OSHy/sub-50_T1w.nii.gz":
-        print("No target image was specified. Proceeding with example image.")
-
-    if args['outdir'] == "/OSHy":
-        print("Warning: Please ensure you specify your own output directory.")
-
-    # Only allowing 6GB per CPU
-    available_ram_gb = psutil.virtual_memory().available / 1e9
-    max_cpus_possible = int(available_ram_gb // 6)
-    
-    if int(args['nthreads']) > max_cpus_possible:
-        print(f"Insufficient memory to run Joint Label Fusion with requested "\
-              f"{args['nthreads']} threads. You can only have a maximum of "\
-              f"{max_cpus_possible} threads with 6 GB of memory per thread. "\
-              f"Proceeding with {max_cpus_possible} threads.")
-
-        args['nthreads'] = str(max_cpus_possible)
+    if args['target'][0] == "None" or args['outdir'] == "None":
+        print("Usage: OSHy.py [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]\n"\
+              "               [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]\n"\
+              "               [-b BIMODAL] [-n NTHREADS]\n"\
+              "The following arguments are required: -t/--target, -o/--outdir\n"\
+              "Use the -h flag for further instructions and details.")
     else:
-        print(f"Running with {args['nthreads']} threads.")
+        # Only allowing 6GB per CPU
+        available_ram_gb = psutil.virtual_memory().available / 1e9
+        max_cpus_possible = int(available_ram_gb // 6)
+        
+        if int(args['nthreads']) > max_cpus_possible:
+            print(f"Insufficient memory to run Joint Label Fusion with "\
+                f"requested {args['nthreads']} threads. You can only have a "\
+                f"maximum of {max_cpus_possible} threads with 6 GB of memory "\
+                f"per thread. Proceeding with {max_cpus_possible} threads.")
 
-    os.environ['ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS'] = args['nthreads']
+            args['nthreads'] = str(max_cpus_possible)
+        else:
+            print(f"Running with {args['nthreads']} threads.")
 
-    oshy_dat = OSHy_data(tesla = args['tesla'][0:1], 
-                         weighting = args['weighting'],
-                         bimodal = convert_to_bool(args['bimodal']),
-                         crop = convert_to_bool(args['crop']))
+        os.environ['ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS'] = args['nthreads']
 
-    for target in args['target']:
-        my_image = Target_img(img_file = target, 
-        crop = convert_to_bool(args['crop']),
-        weighting = args['weighting'],
-        denoise = convert_to_bool(args['denoise']), 
-        b1_bias = convert_to_bool(args['fieldCorrection']),
-        out_dir = args['outdir'],
-        oshy_data = oshy_dat)
+        oshy_dat = OSHy_data(tesla = args['tesla'][0:1], 
+                            weighting = args['weighting'],
+                            bimodal = convert_to_bool(args['bimodal']),
+                            crop = convert_to_bool(args['crop']))
 
-        my_image.run_JLF2(nprocs=args['nthreads'])
+        for target in args['target']:
+            my_image = Target_img(img_file = target, 
+            crop = convert_to_bool(args['crop']),
+            weighting = args['weighting'],
+            denoise = convert_to_bool(args['denoise']), 
+            b1_bias = convert_to_bool(args['fieldCorrection']),
+            out_dir = args['outdir'],
+            oshy_data = oshy_dat)
 
-        if convert_to_bool(args['mosaic']):
-            my_image.create_mosaic()
+            my_image.run_JLF2(nprocs=args['nthreads'])
 
-        my_image.calc_volume()
-        my_image.resample_segmentation()
-        my_image.threshold_structures()
+            if convert_to_bool(args['mosaic']):
+                my_image.create_mosaic()
 
-    print("Done!")
+            my_image.calc_volume()
+            my_image.resample_segmentation()
+            my_image.threshold_structures()
+
+        print("Done!")
