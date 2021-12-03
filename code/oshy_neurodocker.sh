@@ -17,4 +17,4 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --entrypoint "python -u /OSHy/OSHy.py" \
 > OSHy.Dockerfile
 
-docker build --tag jerync/oshyx_0.1:20211126 --file OSHy.Dockerfile .
+docker build --tag jerync/oshyx_0.2:20211130 --file OSHy.Dockerfile .
