@@ -85,7 +85,7 @@ Segmentation of small structures of the brain including the hypothalamus and for
 
 A summary of the pipeline is illustrated in Figure 1. The user can specify the contrast (T1w/T2w) of the atlases used, the field strength (3T/7T) and any pre-processing steps. `OSHy-X` utilises Joint Label Fusion (`JLF`) [@Wang:2013] from Advanced Normalization Tools (`ANTs`; v2.3.1) for the registration [@Avants:2008] of atlases and segmentation of the target image. B1+ bias field inhomogeneity correction is performed using `MriResearchTools` (v0.5.2). Denoising and cropping are performed using ANTs in Python (`ANTsPy`; v0.2.0).
 
-![Figure 1. OSHy-X pipeline](Media/OSHy_figure_1.GIF)
+![Figure 1. OSHy-X pipeline](../Media/OSHy_figure_1.GIF)
 
 **Figure 1.** Pipeline overview of the OSHy-X segmentation tool. Users input a target image via an one-line command, and the pipeline produces hypothalamus and fornix labels, their volumes, and a mosaic visualisation of the segmentations. The pipeline and data are encapsulated within a Docker or Singularity container.
 
@@ -97,19 +97,19 @@ We examined the performance of the `JLF` method using Dice overlaps of manual se
 
 Figure 2 visually compares the differences in the segmentation of a representative non-neurodegenerative disease participant using manual segmentation and `JLF` using LOOCV. Overall, `JLF` tends to under-segment throughout the hypothalamus and fornix. To a lesser extent, `JLF` tends to over-segment the anterior and lateral hypothalamus and the body of the fornix. 
 
-![Figure 2. Manual segmentation and JLF visualisation.](Media/OSHy-X_figure_2.GIF){ width=40% }
+![Figure 2. Manual segmentation and JLF visualisation.](../Media/OSHy-X_figure_2.GIF){ width=40% }
 
 **Figure 2.** Visualisation of segmentation performance between manual segmentation and `JLF`. The hypothalamus is shown in red and the fornix in blue. The first three rows show segmentation in coronal, sagittal and axial planes; a 3D rendering of the structures is illustrated in the fourth row. The difference between `JLF` and manual segmentation illustrates over-segmented (red) and under-segmented (green) areas.
 
 Dice overlaps (Figure 3) and ICC between the two raters indicate excellent segmentation accuracy. The left and right hypothalamus received scores of 0.90 (0.66-0.98 CI) and 0.91 (0.68-0.98 CI). The left and right fornix received scores of 0.97 (0.87-0.99 CI) and 0.68 (0.13-0.91 CI).
 
-![Figure 3. Interrater Dice overlap.](Media/OSHy-X_figure_3.png){ width=30% }
+![Figure 3. Interrater Dice overlap.](../Media/OSHy-X_figure_3.png){ width=30% }
 
 **Figure 3.** Dice overlaps between two raters for the left and right lobes of the hypothalamus and fornix. The median Dice’s coefficient for the left and right hypothalamus is 0.94 (0.01 IQR) and 0.96 (0.03 IQR). The median Dice’s coefficient for the left and right fornix are 0.91 (0.06 IQR) and 0.91 (0.03 IQR).
 
 In comparison to a deep learning method for segmentation [@Billot:2020], we found that `JLF` has higher Dice overlaps with the manual segmentations for both 3T and 7T (Figure 4). Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T, but significant performance benefits at 7T compared to the deep learning method. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
 
-![Figure 4. Dice overlaps of JLF with whole-brain priors and deep learning hypothalamic segmentation methods.](OSHy-X_figure_4.png){ width=30% }
+![Figure 4. Dice overlaps of JLF with whole-brain priors and deep learning hypothalamic segmentation methods.](../Media/OSHy-X_figure_4.png){ width=30% }
 
 **Figure 4.** Dice overlaps of `JLF` with whole-brain priors and deep learning hypothalamic segmentation methods with manual segmentations. The median Dice’s coefficient for `JLF` with 3T and 7T inputs are 0.82 (0.04 IQR) and 0.83 (0.06 IQR). The median Dice’s coefficient for the deep learning method with 3T and 7T inputs are 0.72 (0.03 IQR) and 0.72 (0.05 IQR). In both 3T and 7T field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; p<0005 and p<0.005).
 
