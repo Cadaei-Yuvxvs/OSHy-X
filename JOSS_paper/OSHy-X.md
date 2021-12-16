@@ -90,13 +90,13 @@ Twenty atlases were derived from manual segmentation of the hypothalamus-fornix,
 
 A summary of the pipeline is illustrated in Figure 1. The user can specify the contrast (T1w/T2w) of the atlases used, the field strength (3T/7T) and any pre-processing steps. `OSHy-X` utilises Joint Label Fusion (`JLF`) [@Wang:2013] from Advanced Normalization Tools (`ANTs`; v2.3.1) for the registration [@Avants:2008] of atlases and segmentation of the target image. B1+ bias field inhomogeneity correction is performed using `MriResearchTools` (v0.5.2). Denoising and cropping are performed using ANTs in Python (`ANTsPy`; v0.2.0).
 
-![Pipeline overview of the OSHy-X segmentation tool. Users input a target image via an one-line command, and the pipeline produces hypothalamus and fornix labels, their volumes, and a mosaic visualisation of the segmentations. The pipeline and data are encapsulated within a Docker or Singularity container.](../Media/OSHy_figure_1.GIF)
+![Pipeline overview of the OSHy-X segmentation tool. Users input a target image via an one-line command, and the pipeline produces hypothalamus and fornix labels, their volumes, and a mosaic visualisation of the segmentations. The pipeline and data are encapsulated within a Docker or Singularity container.](../Media/OSHy-X_figure_1.png)
 
 # Performance
 
 Figure 2 visually compares the differences in the segmentation of a representative non-neurodegenerative disease participant using manual segmentation and `JLF` using leave-one out cross validation. Overall, `JLF` tends to under-segment throughout the hypothalamus and fornix. To a lesser extent, `JLF` tends to over-segment the anterior and lateral hypothalamus and the body of the fornix. 
 
-![Visualisation of segmentation performance between manual segmentation and `JLF`. The hypothalamus is shown in red and the fornix in blue. The first three rows show segmentation in coronal, sagittal and axial planes; a 3D rendering of the structures is illustrated in the fourth row. The difference between `JLF` and manual segmentation illustrates over-segmented (red) and under-segmented (green) areas.](../Media/OSHy-X_figure_2.GIF){ width=60% }
+![Visualisation of segmentation performance between manual segmentation and `JLF`. The hypothalamus is shown in red and the fornix in blue. The first three rows show segmentation in coronal, sagittal and axial planes; a 3D rendering of the structures is illustrated in the fourth row. The difference between `JLF` and manual segmentation illustrates over-segmented (red) and under-segmented (green) areas.](../Media/OSHy-X_figure_2.png){ width=60% }
 
 Dice overlaps (Figure 3) and (ICC; 2-way fixed-rater mixed effects model with single measurement) between the two raters indicate excellent segmentation accuracy. The left and right hypothalamus received scores of 0.90 (0.66-0.98 CI) and 0.91 (0.68-0.98 CI). The left and right fornix received scores of 0.97 (0.87-0.99 CI) and 0.68 (0.13-0.91 CI).
 
