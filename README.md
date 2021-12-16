@@ -110,3 +110,9 @@ Contents of the output include:
 * `sub-XX_fornix.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only fornix labels.
 * `sub-XX_mosaic.png`: A 16 slice coronal visualisation of the segmentation.
 * `sub-XX_volumes.csv`: Volumes of the four labels (as described above). Units for volume are in mm<sup>3</sup>.
+
+## Community
+
+Any issues or suggestions can be submitted to https://github.com/Cadaei-Yuvxvs/OSHy-X/issues.
+
+Feel free to fork OSHy-X and submit a pull request if you would like to contribute to this project.
