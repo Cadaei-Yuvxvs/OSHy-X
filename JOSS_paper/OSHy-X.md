@@ -67,14 +67,13 @@ might impact the function of these structures. We present Open-Source
 Hypothalamic-ForniX (`OSHy-X`) atlases and tool for multi-atlas fusion 
 segmentation for 3T and 7T. The atlases are based on 20 manual segmentations, 
 which we demonstrate have high interrater agreement. The versatility of the 
-`OSHy-X` tool allows segmentation and volumetric analysis for different field 
-strengths and contrasts. We also demonstrate that `OSHy-X` segmentation has 
-higher Dice overlaps (3T and 7T inputs: p<0005, p<0.005) than a deep-learning 
-segmentation method for the hypothalamus [@Billot:2020]. We have previously 
-demonstrated the use of `OSHy-X` on a cohort of 329 non-neurodegenerative 
-control participants and 42 patients with ALS to investigate reduced 
-hypothalamic volume and its association with appetite, hypermetabolism and 
-weight loss [@Chang:2021].
+`OSHy-X` tool allows segmentation and volumetric analysis of the hypothalamus
+and fornix from MRI scans. We also demonstrate that `OSHy-X` segmentation 
+outperforms a deep-learning segmentation method for the hypothalamus 
+[@Billot:2020]. We have previously demonstrated the use of `OSHy-X` on a cohort 
+of 329 non-neurodegenerative control participants and 42 patients with ALS to 
+investigate reduced hypothalamic volume and its association with appetite, 
+hypermetabolism and weight loss [@Chang:2021].
 
 # Statement of need
 
