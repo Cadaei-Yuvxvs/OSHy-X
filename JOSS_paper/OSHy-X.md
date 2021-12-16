@@ -80,6 +80,8 @@ weight loss [@Chang:2021].
 
 Segmentation of small structures of the brain including the hypothalamus and fornix is important for primary research of health and disease. Amyotrophic Lateral Sclerosis (ALS) is a fatal neurodegenerative disease that involves the degeneration and death of motor neurons in the brain and spinal cord. Neuronal death and gross volume loss has also been reported in the hypothalamus in ALS [@Gorges:2017] [@Gabery:2021] [@Christidi:2019]. To measure such changes, methods for *in vivo* MRI segmentation of the hypothalamus and fornix include deep learning [@Billot:2020], seed growing techniques [@Wolff:2018], and manual segmentation [@Gorges:2017]. There is a need to develop and distribute open-source atlases of these structures for more accurate and standardised segmentation. Here, we present the Open-Source Hypothalamic-ForniX (`OSHy-X`) atlases and tool for multi-atlas fusion segmentation for 3T and 7T. `OSHy-X` is an atlas repository and containerised `Python` script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans.
 
+<br>
+
 # Methodology
 
 ## Atlas
@@ -100,15 +102,15 @@ Figure 2 visually compares the differences in the segmentation of a representati
 
 Dice overlaps (Figure 3) and (ICC; 2-way fixed-rater mixed effects model with single measurement) between the two raters indicate excellent segmentation accuracy. The left and right hypothalamus received scores of 0.90 (0.66-0.98 CI) and 0.91 (0.68-0.98 CI). The left and right fornix received scores of 0.97 (0.87-0.99 CI) and 0.68 (0.13-0.91 CI).
 
-![Dice overlaps between two raters for the left and right lobes of the hypothalamus and fornix. The median Dice’s coefficient for the left and right hypothalamus is 0.94 (0.01 IQR) and 0.96 (0.03 IQR). The median Dice’s coefficient for the left and right fornix are 0.91 (0.06 IQR) and 0.91 (0.03 IQR).](../Media/OSHy-X_figure_3.png){ width=60% }
+![Dice overlaps between two raters for the left and right lobes of the hypothalamus and fornix. The median Dice’s coefficient for the left and right hypothalamus is 0.94 (0.01 IQR) and 0.96 (0.03 IQR). The median Dice’s coefficient for the left and right fornix are 0.91 (0.06 IQR) and 0.91 (0.03 IQR).](../Media/OSHy-X_figure_3.png){ width=70% }
 
 In comparison to a deep learning method for segmentation [@Billot:2020]  (available in `FreeSurfer` v7.2), we found that `JLF` has higher Dice overlaps with the manual segmentations for both 3T and 7T (Figure 4). Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T, but significant performance benefits at 7T compared to the deep learning method. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
 
-![Dice overlaps of `JLF` with whole-brain priors and deep learning hypothalamic segmentation methods with manual segmentations. The median Dice’s coefficient for `JLF` with 3T and 7T inputs are 0.82 (0.04 IQR) and 0.83 (0.06 IQR). The median Dice’s coefficient for the deep learning method with 3T and 7T inputs are 0.72 (0.03 IQR) and 0.72 (0.05 IQR). In both 3T and 7T field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; p<0005 and p<0.005).](../Media/OSHy-X_figure_4.png){ width=60% }
+![Dice overlaps of `JLF` with whole-brain priors and deep learning hypothalamic segmentation methods with manual segmentations. The median Dice’s coefficient for `JLF` with 3T and 7T inputs are 0.82 (0.04 IQR) and 0.83 (0.06 IQR). The median Dice’s coefficient for the deep learning method with 3T and 7T inputs are 0.72 (0.03 IQR) and 0.72 (0.05 IQR). In both 3T and 7T field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; p<0005 and p<0.005).](../Media/OSHy-X_figure_4.png){ width=70% }
 
 # Availability
 
-The `OSHy-X` atlas is freely available at (Media/https://osf.io/zge9t) and the tool is available via the `Neurodesk` data analysis environment (https://neurodesk.github.io) or as a `Docker`/`Singularity` container (https://github.com/Cadaei-Yuvxvs/OSHy-X ).
+The `OSHy-X` atlas is freely available at (https://osf.io/zge9t) and the tool is available via the `Neurodesk` data analysis environment (https://neurodesk.github.io) or as a `Docker`/`Singularity` container (https://github.com/Cadaei-Yuvxvs/OSHy-X ).
 
 # Acknowledgements
 
