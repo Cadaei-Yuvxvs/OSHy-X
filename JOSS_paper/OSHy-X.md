@@ -12,24 +12,24 @@ authors:
   - name: Jeryn Chang^[first author]
     orcid: 0000-0002-6659-365X
     affiliation: 1
-  - name: Frederik Steyn^[corresponding author]
+  - name: Frederik Steyn
     orcid: 0000-0002-4782-3608
     affiliation: "1,2,3,4"
-  - name: Shyuan Ngo^[corresponding author]
+  - name: Shyuan Ngo
     orcid: 0000-0002-1388-2108
     affiliation: "2,3,4,5"
-  - name: Robert Henderson^[corresponding author]
+  - name: Robert Henderson
     orcid: 0000-0002-2820-8183
     affiliation: "2,3,4"
-  - name: Christine Guo^[corresponding author]
+  - name: Christine Guo
     affiliation: 6
-  - name: Steffen Bollmann^[corresponding author]
+  - name: Steffen Bollmann
     orcid: 0000-0002-2909-0906
     affiliation: "7,8"
-  - name: Jurgen Fripp^[corresponding author]
+  - name: Jurgen Fripp
     orcid: 0000-0001-9705-0079
     affiliation: 9
-  - name: Markus Barth^[corresponding author]
+  - name: Markus Barth
     orcid: 0000-0002-0520-1843
     affiliation: "7,8"
   - name: Thomas Shaw^[Senior author]
