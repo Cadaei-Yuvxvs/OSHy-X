@@ -56,8 +56,10 @@ def test_convert_to_bool(boolstrings):
         convert_to_bool(boolstrings)
     assert str(error_info.value) == 'Input must be a string.'
 
+oshy_dat = None
 # Create an instance of OSHy_data. Methods are never called outside of this class.
-def create_OSHy_data(mocker):
+@pytest.fixture
+def bimodal_OSHy_data(mocker):
     mocker.patch(
         'OSHyX.ants.image_read',
         return_value="An ANTsImage object"
@@ -72,10 +74,28 @@ def create_OSHy_data(mocker):
                         weighting = 'T1w',
                         bimodal = True,
                         crop = True)
-    
+
     return(oshy_dat)
 
-oshy_dat = create_OSHy_data(mocker)
+@pytest.fixture
+def unimodal_OSHy_data(mocker):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    oshy_dat = OSHy_data(tesla = '3', 
+                        weighting = 'T1w',
+                        bimodal = False,
+                        crop = True)
+
+    return(oshy_dat)
+
 
 # my_image.run_JLF2(nprocs=args['nthreads'])
 
@@ -88,7 +108,7 @@ oshy_dat = create_OSHy_data(mocker)
 
 
 
-def test_run_JLF2(mocker):
+def test_run_JLF2_bimodal(mocker):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -106,16 +126,16 @@ def test_run_JLF2(mocker):
                         denoise = True, 
                         b1_bias = True,
                         out_dir = 'out_dir',
-                        oshy_data = oshy_dat
+                        oshy_data = bimodal_OSHy_data
                         )
 
     spy = mocker.spy(subprocess, 'Popen')
-    assert my_image.run_JLF2(2) == None
+    assert my_image.run_JLF2(5) == None
 
     spy.assert_called_once_with(
         [
             "antsJointLabelFusion2.sh", 
-            "-d", "3", "-j", 2,
+            "-d", "3", "-j", 5,
             "-o", "out_dir/sub-XX_",
             "-t", "out_dir/sub-XX_denoised_bias-corrected_cropped_T1w.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
