@@ -134,8 +134,8 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data):
         [
             "antsJointLabelFusion2.sh", 
             "-d", "3", "-j", 5,
-            "-o", "out_dir/sub-XX_",
-            "-t", "out_dir/sub-XX_denoised_bias-corrected_cropped_T1w.nii.gz",
+            "-o", "out_dir/sub-XX/sub-XX_",
+            "-t", "out_dir/sub-XX/sub-XX_denoised_bias-corrected_cropped_T1w.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
