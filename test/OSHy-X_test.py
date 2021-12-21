@@ -115,7 +115,7 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
     mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
     mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={})
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
     my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
