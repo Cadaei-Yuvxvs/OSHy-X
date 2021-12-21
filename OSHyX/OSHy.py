@@ -415,12 +415,15 @@ def convert_to_bool(b_str:str):
     Return bool
     """
 
+    if not isinstance(b_str, str):
+        raise TypeError("Input must be a string.")
+        
     if b_str.upper() == "TRUE":
         return True
     elif b_str.upper() == "FALSE":
         return False
     else:
-        raise TypeError("Please check your spelling for True or False.")
+        raise ValueError("Please check your spelling for True or False.")
 
 if __name__ == "__main__":
 
