@@ -9,7 +9,7 @@ from code.OSHy import convert_to_bool
     "TRUE",
 ])
 
-def test_convert_to_bool:
+def test_convert_to_bool():
     assert convert_to_bool(boolstrings)
 
 @pytest.mark.parametrize("boolstrings", [
@@ -19,7 +19,7 @@ def test_convert_to_bool:
     "FALSE",
 ])
 
-def test_convert_to_bool:
+def test_convert_to_bool():
     assert not convert_to_bool(boolstrings)
 
 @pytest.mark.parametrize("boolstrings", [
@@ -31,7 +31,7 @@ def test_convert_to_bool:
     " ",
 ])
 
-def test_convert_to_bool:
+def test_convert_to_bool():
     with pytest.raises(Exception) as error_info:
         convert_to_bool(boolstrings)
     assert str(error_info.value) == 'Please check your spelling for True or False.'
