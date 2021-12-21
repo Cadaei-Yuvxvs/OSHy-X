@@ -108,12 +108,12 @@ def unimodal_OSHy_data(mocker):
 
 
 
-def test_run_JLF2_bimodal(mocker):
+def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "$PWD"]))
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
     mocker.patch('OSHyX.os.remove', return_value=None)
     mocker.patch('OSHyX.ants.registration', return_value={})
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
