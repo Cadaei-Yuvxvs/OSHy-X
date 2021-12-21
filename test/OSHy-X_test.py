@@ -57,7 +57,7 @@ def test_convert_to_bool(boolstrings):
     assert str(error_info.value) == 'Input must be a string.'
 
 # Create an instance of OSHy_data. Methods are never called outside of this class.
-oshy_dat = test_OSHy_data(mocker):
+def create_OSHy_data(mocker):
     mocker.patch(
         'OSHyX.ants.image_read',
         return_value="An ANTsImage object"
@@ -74,6 +74,8 @@ oshy_dat = test_OSHy_data(mocker):
                         crop = True)
     
     return(oshy_dat)
+
+oshy_dat = create_OSHy_data(mocker)
 
 # my_image.run_JLF2(nprocs=args['nthreads'])
 
