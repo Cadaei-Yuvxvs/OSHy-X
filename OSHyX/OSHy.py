@@ -34,7 +34,7 @@ class Target_img():
         
         if not isinstance(weighting, str):
             raise TypeError("weighting must be a string of 'T1w' or 'T2w'.")
-        elif not (weighting.capitalize() == 'T1w' or self.weighting.capitalize() == 'T2w'):
+        elif not (weighting.capitalize() == 'T1w' or weighting.capitalize() == 'T2w'):
             raise ValueError("weighting must be a string of 'T1w' or 'T2w'.")
 
         if not isinstance(crop, bool):
@@ -55,6 +55,8 @@ class Target_img():
         self.outdir = out_dir.strip()
         self.sub_outdir = f"{self.outdir}/{self.sub}"
         self.weighting = weighting.capitalize()
+        self.crop = crop
+        self.b1_bias = b1_bias
         self.oshy_data = oshy_data
         self.preprocess = ""
         self.segmentation = None
