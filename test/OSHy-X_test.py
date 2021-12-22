@@ -123,10 +123,17 @@ def test_OSHy_data_weighting(mocker, weighting):
     
     assert str(error_info.value) == "weighting must be a string of 'T1w' or 'T2w'."
 
-@pytest.mark.parametrize("weighting", [
-    'T1w','T2w'
+@pytest.mark.parametrize("weighting,expected_weighting", [
+    ('T1w','T1w'),
+    ('t1w','T1w'),
+    ('T1W','T1w'),
+    ('t1W','T1w'),
+    ('T2w','T2w'),
+    ('t2w','T2w'),
+    ('T2W','T2w'),
+    ('t2W','T2w')
 ])
-def test_OSHy_data_weighting(mocker, weighting):
+def test_OSHy_data_weighting(mocker, weighting, expected_weighting):
     mocker.patch(
         'OSHyX.ants.image_read',
         return_value="An ANTsImage object"
@@ -141,7 +148,7 @@ def test_OSHy_data_weighting(mocker, weighting):
                          weighting = weighting,
                          bimodal = True,
                          crop = True)
-    assert oshy_dat.weighting == weighting
+    assert oshy_dat.weighting == expected_weighting
 
 ## bimodal
 @pytest.mark.parametrize("bimodal", [
