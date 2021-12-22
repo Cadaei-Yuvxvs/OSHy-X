@@ -294,7 +294,7 @@ def unimodal_OSHy_data(mocker):
         ("sub-XX_T1w.nii.gz", ".", "./sub-XX"),
         ("sub-XX_T1w.nii.gz", " output ", "output/sub-XX"),
     ])
-def test_Target_img():
+def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -327,7 +327,7 @@ def test_Target_img():
         (False, True, True, "bias-corrected_cropped_"),
         (True, False, True, "denoised_cropped_")
     ])
-def test_Target_img():
+def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -359,7 +359,7 @@ def test_Target_img():
     ('T2W','T2w'),
     ('t2W','T2w')
 ])
-def test_Target_img():
+def test_Target_img(mocker,weighting,expected_weighting):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -385,7 +385,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img():
+def test_Target_img(mocker,img_file):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -411,7 +411,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img():
+def test_Target_img(mocker,out_dir):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -437,7 +437,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img():
+def test_Target_img(mocker,weighting):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -463,7 +463,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img():
+def test_Target_img(mocker,crop):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -489,7 +489,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img():
+def test_Target_img(mocker,denoise):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -515,7 +515,7 @@ def test_Target_img():
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img():
+def test_Target_img(mocker,b1_bias):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
