@@ -21,16 +21,40 @@ class Target_img():
         oshy_data (OSHy_data): An object of the OSHy_data class.
         """
 
+        # Input checks
+        if not isinstance(img_file,str):
+            raise TypeError("Target must be a string.")
+        elif not len(img_file) > 0:
+            raise ValueError("Target must be a string of length greater than 0.")
+        
+        if not isinstance(out_dir,str):
+            raise TypeError("Output directory must be a string.")
+        elif not len(out_dir) > 0:
+            raise ValueError("Output directory must be a string of length greater than 0.")
+        
+        if not isinstance(weighting, str):
+            raise TypeError("weighting must be a string of 'T1w' or 'T2w'.")
+        elif not (weighting.capitalize() == 'T1w' or self.weighting.capitalize() == 'T2w'):
+            raise ValueError("weighting must be a string of 'T1w' or 'T2w'.")
+
+        if not isinstance(crop, bool):
+            raise TypeError("crop must be a boolean.")
+
+        if not isinstance(denoise, bool):
+            raise TypeError("denoise must be a boolean.")
+
+        if not isinstance(b1_bias, bool):
+            raise TypeError("b1_bias must be a boolean.")
+
         print(f"\nReading {img_file}.")
 
-        self.target_img = ants.image_read(img_file)
+        self.img_file = img_file.strip()
+        self.target_img = ants.image_read(self.img_file)
         self.target_processed = self.target_img
-        self.weighting = weighting
-        self.b1_bias = b1_bias
-        self.crop = crop
-        self.sub = img_file.split("/")[-1].split("_")[0].split(".")[0]
+        self.sub = self.img_file.split("/")[-1].split("_")[0].split(".")[0]
         self.outdir = out_dir.strip()
         self.sub_outdir = f"{self.outdir}/{self.sub}"
+        self.weighting = weighting.capitalize()
         self.oshy_data = oshy_data
         self.preprocess = ""
         self.segmentation = None
@@ -347,6 +371,7 @@ class OSHy_data():
             raise ValueError("weighting must be a string of 'T1w' or 'T2w'.")
         else:
             self.weighting = self.weighting.capitalize()
+
         if not isinstance(self.bimodal, bool):
             raise TypeError("bimodal must be a boolean.")
 

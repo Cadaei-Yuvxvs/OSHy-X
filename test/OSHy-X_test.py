@@ -279,12 +279,271 @@ def unimodal_OSHy_data(mocker):
 
     return(oshy_dat)
 
+# Target_img
+
+
+@pytest.mark.parametrize(
+    "img_filename,out_dir,expected_sub_outdir", 
+    [
+        ("sub-XX_T1w.nii.gz", "output", "output/sub-XX"),
+        ("123_T1w.nii.gz", "output", "output/123"),
+        ("123", "output", "output/123"),
+        ("foo_bar_abc", "output", "output/foo"),
+        (" sub-XX_T1w.nii.gz ", "output", "output/sub-XX"),
+        ("sub-XX_T1w.nii.gz", "123", "123/sub-XX"),
+        ("sub-XX_T1w.nii.gz", ".", "./sub-XX"),
+        ("sub-XX_T1w.nii.gz", " output ", "output/sub-XX"),
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    my_image = Target_img(img_file = img_filename, 
+                        crop = True,
+                        weighting = 'T1w',
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = out_dir,
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    assert my_image.sub_outdir == expected_sub_outdir
+
+@pytest.mark.parametrize(
+    "denoise,b1_bias,crop,expected_preprocess", 
+    [
+        (True,True,True,"denoised_bias-corrected_cropped_"),
+        (True,True,False,"denoised_bias-corrected_"),
+        (True,False,False,"denoised_"),
+        (False, False, False, ""),
+        (False, False, True, "cropped_"),
+        (False, True, True, "bias-corrected_cropped_"),
+        (True, False, True, "denoised_cropped_")
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
+                        crop = crop,
+                        weighting = 'T1w',
+                        denoise = denoise, 
+                        b1_bias = b1_bias,
+                        out_dir = 'out_dir',
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    assert my_image.preprocess == expected_preprocess
+
+@pytest.mark.parametrize("weighting,expected_weighting", [
+    ('T1w','T1w'),
+    ('t1w','T1w'),
+    ('T1W','T1w'),
+    ('t1W','T1w'),
+    ('T2w','T2w'),
+    ('t2w','T2w'),
+    ('T2W','T2w'),
+    ('t2W','T2w')
+])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
+                        crop = True,
+                        weighting = weighting,
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = 'out_dir',
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    assert my_image.weighting == expected_weighting
+
+@pytest.mark.parametrize("img_file",
+    [
+        1,2.0,{'file'},('file'),['file'],True,False,""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = img_file, 
+                            crop = True,
+                            weighting = 'T1w',
+                            denoise = True, 
+                            b1_bias = True,
+                            out_dir = 'out_dir',
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value).find("Target must be a string") > -1
+
+@pytest.mark.parametrize("out_dir",
+    [
+        1,2.0,{'file'},('file'),['file'],True,False,""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
+                            crop = True,
+                            weighting = 'T1w',
+                            denoise = True, 
+                            b1_bias = True,
+                            out_dir = out_dir,
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value).find("Output directory must be a string") > -1
+
+@pytest.mark.parametrize("weighting",
+    [
+        1,2.0,{'file'},('file'),['file'],True,False,""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
+                            crop = True,
+                            weighting = weighting,
+                            denoise = True, 
+                            b1_bias = True,
+                            out_dir = 'out_dir',
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value).find("Weighting must be a string") > -1
+
+@pytest.mark.parametrize("crop",
+    [
+        1,2.0,{'file'},('file'),['file'],""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
+                            crop = crop,
+                            weighting = 'T1w',
+                            denoise = True, 
+                            b1_bias = True,
+                            out_dir = 'out_dir',
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value) == "crop must be a boolean."
+
+@pytest.mark.parametrize("denoise",
+    [
+        1,2.0,{'file'},('file'),['file'],""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
+                            crop = True,
+                            weighting = 'T1w',
+                            denoise = denoise, 
+                            b1_bias = True,
+                            out_dir = 'out_dir',
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value) == "denoise must be a boolean."
+
+@pytest.mark.parametrize("b1_bias",
+    [
+        1,2.0,{'file'},('file'),['file'],""
+    ])
+def test_Target_img():
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    with pytest.raises(Exception) as error_info:
+        my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
+                            crop = True,
+                            weighting = 'T1w',
+                            denoise = True, 
+                            b1_bias = b1_bias,
+                            out_dir = 'out_dir',
+                            oshy_data = bimodal_OSHy_data
+                            )
+    assert str(error_info.value) == "b1_bias must be a boolean."
+
 # if convert_to_bool(args['mosaic']):
 #     my_image.create_mosaic()
 
 # my_image.calc_volume()
 # my_image.resample_segmentation()
 # my_image.threshold_structures()
+
 
 
 @pytest.mark.parametrize(
