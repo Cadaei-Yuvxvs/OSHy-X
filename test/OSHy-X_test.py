@@ -215,7 +215,6 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
             stdin=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             universal_newlines=True
-
     )
 
     def test_run_JLF2_unimodal(mocker, unimodal_OSHy_data):
@@ -261,3 +260,4 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
                 stdin=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 universal_newlines=True
+        )
