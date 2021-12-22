@@ -56,7 +56,7 @@ def test_convert_to_bool(boolstrings):
         convert_to_bool(boolstrings)
     assert str(error_info.value) == 'Input must be a string.'
 
-# Test OSHy_data
+# Test OSHy_data instantiation
 ## tesla
 @pytest.mark.parametrize("tesla", [
     3,7,1.06,9000,True,False,[],('3'),{},'37','7T','3T'
@@ -279,7 +279,7 @@ def unimodal_OSHy_data(mocker):
 
     return(oshy_dat)
 
-# Test Target_img
+# Test Target_img instantiation
 @pytest.mark.parametrize(
     "img_filename,out_dir,expected_sub_outdir", 
     [
@@ -535,6 +535,7 @@ def test_Target_img(mocker,b1_bias):
                             )
     assert str(error_info.value) == "b1_bias must be a boolean."
 
+# Test methods of Target_img
 @pytest.mark.parametrize(
     "img_filename,denoise,b1_bias,crop,out_dir,weight,"\
     "expected_outdir,"\
@@ -780,7 +781,7 @@ def test_resample_segmentation(mocker):
     assert my_image.resample_segmentation() == None
 
     spy_resample.assert_called_once_with(
-               "An ANTsImage object", "An ANTsImage object" interp_type="genericLabel"
+               "An ANTsImage object", "An ANTsImage object", interp_type="genericLabel"
             )
 
     spy_write.assert_called_once_with(
