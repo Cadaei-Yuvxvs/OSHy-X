@@ -107,8 +107,118 @@ def unimodal_OSHy_data(mocker):
 # my_image.threshold_structures()
 
 
+@pytest.mark.parametrize(
+    "img_filename,denoise,b1_bias,crop,out_dir,weight,expected_outdir,expected_target", 
+    [
+        ("sub-XX_T1w.nii.gz",True,True,True,"out_dir","T1w",
+        "out_dir/sub-XX/sub-XX_",
+        "out_dir/sub-XX/sub-XX_denoised_bias-corrected_cropped_T1w.nii.gz"
+        ),
+        ("foo_T1w.nii.gz",True,True,True,"out_dir","T1w",
+        "out_dir/foo/foo_",
+        "out_dir/foo/foo_denoised_bias-corrected_cropped_T1w.nii.gz"
+        ),
+        ("bar",True,True,True,"out_dir","T1w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_denoised_bias-corrected_cropped_T1w.nii.gz"
+        ),
+        ("42_ses-01_T1w.nii.gz",True,True,True,"out_dir","T1w",
+        "out_dir/42/42_",
+        "out_dir/42/42_denoised_bias-corrected_cropped_T1w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,True,True,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,True,True,"9000","T2w",
+        "9000/bar/bar_",
+        "9000/bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,True,True,".","T2w",
+        "./bar/bar_",
+        "./bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,False,False,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_denoised_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,True,False,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_denoised_bias-corrected_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",False,True,True,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_bias-corrected_cropped_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",False,False,True,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_cropped_T2w.nii.gz"
+        ),
+        ("sub-XX_T1w.nii.gz",True,False,True,"out_dir","T2w",
+        "out_dir/bar/bar_",
+        "out_dir/bar/bar_denoised_cropped_T2w.nii.gz"
+        )
+    ])
+def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
+                          b1_bias,crop,out_dir,weight,expected_outdir,
+                          expected_target):
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
 
-def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data):
+    my_image = Target_img(img_file = img_filename, 
+                        crop = crop,
+                        weighting = weight,
+                        denoise = denoise, 
+                        b1_bias = b1_bias,
+                        out_dir = out_dir,
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    spy = mocker.spy(subprocess, 'Popen')
+    assert my_image.run_JLF2(5) == None
+
+    spy.assert_called_once_with(
+        [
+            "antsJointLabelFusion2.sh", 
+            "-d", "3", "-j", 5,
+            "-o", expected_outdir,
+            "-t", expected_target,
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-g", "image.nii.gz", "-l", "image.nii.gz",
+            "-b" ,"1", "-b", "2", "-b" "3", "-b", "4", "-a", "4", "-s", "10"], 
+            stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True
+
+    )
+
+    def test_run_JLF2_unimodal(mocker, unimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -146,20 +256,8 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data):
             "-g", "image.nii.gz", "-l", "image.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
             "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
-            "-g", "image.nii.gz", "-l", "image.nii.gz",
             "-b" ,"1", "-b", "2", "-b" "3", "-b", "4", "-a", "4", "-s", "10"], 
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             universal_newlines=True
-
-    )
