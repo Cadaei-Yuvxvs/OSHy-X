@@ -279,9 +279,7 @@ def unimodal_OSHy_data(mocker):
 
     return(oshy_dat)
 
-# Target_img
-
-
+# Test Target_img
 @pytest.mark.parametrize(
     "img_filename,out_dir,expected_sub_outdir", 
     [
@@ -537,15 +535,6 @@ def test_Target_img(mocker,b1_bias):
                             )
     assert str(error_info.value) == "b1_bias must be a boolean."
 
-# if convert_to_bool(args['mosaic']):
-#     my_image.create_mosaic()
-
-# my_image.calc_volume()
-# my_image.resample_segmentation()
-# my_image.threshold_structures()
-
-
-
 @pytest.mark.parametrize(
     "img_filename,denoise,b1_bias,crop,out_dir,weight,"\
     "expected_outdir,"\
@@ -702,3 +691,136 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
                 stderr=subprocess.STDOUT,
                 universal_newlines=True
         )
+
+def test_create_mosaic(mocker):
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+
+    my_image = Target_img(img_file = "sub-XX.nii.gz", 
+                        crop = True,
+                        weighting = 'T1w',
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = "output",
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    spy = mocker.spy(ants, 'plot')
+    assert my_image.create_mosaic() == None
+
+    spy.assert_called_once_with("An ANTsImage object", "An ANTsImage object", overlay_cmap='jet', 
+        overlay_alpha=0.8, axis=1, nslices = 16, title="sub-XX", 
+        filename="output/sub-XX/sub-XX_mosaic.png")
+
+def test_calc_volume(mocker):
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
+
+    my_image = Target_img(img_file = "sub-XX.nii.gz", 
+                        crop = True,
+                        weighting = 'T1w',
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = "output",
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    spy = mocker.spy(ants, 'plot')
+    assert my_image.calc_volume() == None
+
+    spy.assert_called_once_with(
+            [
+                "ImageMath", "3",
+                "output/sub-XX/sub-XX_volumes.csv", "LabelStats",
+                "globbed",
+                "output/sub-XX/sub-XX_denoised_bias-corrected_cropped_T1w.nii.gz"
+            ], 
+            stdout=subprocess.PIPE, stdin=subprocess.PIPE, 
+            stderr=subprocess.STDOUT)
+
+def test_resample_segmentation(mocker):
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.resample_image_to_target', return_value="Resampled to target!")
+
+    my_image = Target_img(img_file = "sub-XX.nii.gz", 
+                        crop = True,
+                        weighting = 'T1w',
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = "output",
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    spy_resample = mocker.spy(ants, 'resample_image_to_target')
+    spy_write = mocker.spy(ants, 'image_write')
+
+    assert my_image.resample_segmentation() == None
+
+    spy_resample.assert_called_once_with(
+               "An ANTsImage object", "An ANTsImage object" interp_type="genericLabel"
+            )
+
+    spy_write.assert_called_once_with(
+        "Resampled to target!", 
+        filename = "output/sub-XX/sub-XX_resampled_Labels"\
+                    ".nii.gz"
+    )
+
+def test_threshold_structures(mocker):
+    mocker.patch('OSHyX.os.path.exists', return_value=True)
+    mocker.patch('OSHyX.ants.image_write', return_value=None)
+    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHyX.os.remove', return_value=None)
+    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.threshold_image', return_value="Thresholded target!")
+
+    my_image = Target_img(img_file = "sub-XX.nii.gz", 
+                        crop = True,
+                        weighting = 'T1w',
+                        denoise = True, 
+                        b1_bias = True,
+                        out_dir = "output",
+                        oshy_data = bimodal_OSHy_data
+                        )
+
+    spy_threshold = mocker.spy(ants, 'threshold_image')
+    spy_write = mocker.spy(ants, 'image_write')
+
+    assert my_image.threshold_structures() == None
+
+    spy_threshold.assert_any_call("An ANTsImage object", 1, 2)
+    spy_threshold.assert_any_call("An ANTsImage object", 3, 4)
+
+    spy_write.assert_any_call("Thresholded target!", 
+    filename="output/sub-XX/sub-XX_hypothalamus.nii.gz"
+    )
+    spy_write.assert_any_call("Thresholded target!", 
+    filename="output/sub-XX/sub-XX_fornix.nii.gz"
+    )
