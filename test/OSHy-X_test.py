@@ -60,7 +60,7 @@ def test_convert_to_bool(boolstrings):
 ## tesla
 @pytest.mark.parametrize("tesla", [
     3,7,1.06,9000,True,False,[],('3'),{},'37','7T','3T'
-]
+])
 def test_OSHy_data_tesla(mocker, tesla):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -82,7 +82,7 @@ def test_OSHy_data_tesla(mocker, tesla):
 
 @pytest.mark.parametrize("tesla", [
     '3','7'
-]
+])
 def test_OSHy_data_tesla(mocker, tesla):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -103,7 +103,7 @@ def test_OSHy_data_tesla(mocker, tesla):
 ## weighting
 @pytest.mark.parametrize("weighting", [
     3,7,1.06,9000,True,False,[],('T1w'),{},'T3w','w1T'
-]
+])
 def test_OSHy_data_weighting(mocker, weighting):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -125,7 +125,7 @@ def test_OSHy_data_weighting(mocker, weighting):
 
 @pytest.mark.parametrize("weighting", [
     'T1w','T2w'
-]
+])
 def test_OSHy_data_weighting(mocker, weighting):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -146,7 +146,7 @@ def test_OSHy_data_weighting(mocker, weighting):
 ## bimodal
 @pytest.mark.parametrize("bimodal", [
     7,1.06,[],('T1w'),{},'foo',
-]
+])
 def test_OSHy_data_bimodal(mocker, bimodal):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -168,7 +168,7 @@ def test_OSHy_data_bimodal(mocker, bimodal):
 
 @pytest.mark.parametrize("bimodal", [
     True,False
-]
+])
 def test_OSHy_data_bimodal(mocker, bimodal):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -190,7 +190,7 @@ def test_OSHy_data_bimodal(mocker, bimodal):
 ## crop
 @pytest.mark.parametrize("crop", [
     7,1.06,[],('T1w'),{},'foo',
-]
+])
 def test_OSHy_data_crop(mocker, crop):
     mocker.patch(
         'OSHyX.ants.image_read',
@@ -213,7 +213,7 @@ def test_OSHy_data_crop(mocker, crop):
 @pytest.mark.parametrize("crop,expected_crop", [
     (True, "cropped"),
     (False, "whole")
-]
+])
 def test_OSHy_data_bimodal(mocker, crop, expected_crop):
     mocker.patch(
         'OSHyX.ants.image_read',
