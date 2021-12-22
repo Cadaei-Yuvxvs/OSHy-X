@@ -714,7 +714,10 @@ def test_create_mosaic(mocker, bimodal_OSHy_data):
                         oshy_data = bimodal_OSHy_data
                         )
 
+    my_image.run_JLF2(1)
+    
     spy = mocker.spy(ants, 'plot')
+ 
     assert my_image.create_mosaic() == None
 
     spy.assert_called_once_with("An ANTsImage object", "An ANTsImage object", overlay_cmap='jet', 
@@ -731,6 +734,7 @@ def test_calc_volume(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.plot', return_value=None)
     mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
@@ -742,7 +746,11 @@ def test_calc_volume(mocker, bimodal_OSHy_data):
                         oshy_data = bimodal_OSHy_data
                         )
 
+    my_image.run_JLF2(1)
+    my_image.create_mosaic()
+
     spy = mocker.spy(subprocess, 'Popen')
+
     assert my_image.calc_volume() == None
 
     spy.assert_called_once_with(
@@ -765,6 +773,8 @@ def test_resample_segmentation(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.plot', return_value=None)
+    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
     mocker.patch('OSHyX.ants.resample_image_to_target', return_value="Resampled to target!")
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
@@ -775,6 +785,10 @@ def test_resample_segmentation(mocker, bimodal_OSHy_data):
                         out_dir = "output",
                         oshy_data = bimodal_OSHy_data
                         )
+
+    my_image.run_JLF2(1)
+    my_image.create_mosaic()
+    my_image.calc_volume()
 
     spy_resample = mocker.spy(ants, 'resample_image_to_target')
     spy_write = mocker.spy(ants, 'image_write')
@@ -802,6 +816,9 @@ def test_threshold_structures(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.threshold_image', return_value="Thresholded target!")
+    mocker.patch('OSHyX.ants.plot', return_value=None)
+    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
+    mocker.patch('OSHyX.ants.resample_image_to_target', return_value="Resampled to target!")
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
@@ -812,13 +829,18 @@ def test_threshold_structures(mocker, bimodal_OSHy_data):
                         oshy_data = bimodal_OSHy_data
                         )
 
+    my_image.run_JLF2(1)
+    my_image.create_mosaic()
+    my_image.calc_volume()
+    my_image.resample_segmentation()
+    
     spy_threshold = mocker.spy(ants, 'threshold_image')
     spy_write = mocker.spy(ants, 'image_write')
 
     assert my_image.threshold_structures() == None
 
-    spy_threshold.assert_any_call("An ANTsImage object", 1, 2)
-    spy_threshold.assert_any_call("An ANTsImage object", 3, 4)
+    spy_threshold.assert_any_call("Resampled to target!", 1, 2)
+    spy_threshold.assert_any_call("Resampled to target!", 3, 4)
 
     spy_write.assert_any_call("Thresholded target!", 
     filename="output/sub-XX/sub-XX_hypothalamus.nii.gz"
