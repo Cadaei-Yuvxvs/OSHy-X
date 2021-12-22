@@ -693,7 +693,7 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
                 universal_newlines=True
         )
 
-def test_create_mosaic(mocker):
+def test_create_mosaic(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -720,7 +720,7 @@ def test_create_mosaic(mocker):
         overlay_alpha=0.8, axis=1, nslices = 16, title="sub-XX", 
         filename="output/sub-XX/sub-XX_mosaic.png")
 
-def test_calc_volume(mocker):
+def test_calc_volume(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -754,7 +754,7 @@ def test_calc_volume(mocker):
             stdout=subprocess.PIPE, stdin=subprocess.PIPE, 
             stderr=subprocess.STDOUT)
 
-def test_resample_segmentation(mocker):
+def test_resample_segmentation(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -790,7 +790,7 @@ def test_resample_segmentation(mocker):
                     ".nii.gz"
     )
 
-def test_threshold_structures(mocker):
+def test_threshold_structures(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
