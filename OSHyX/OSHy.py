@@ -345,7 +345,7 @@ class OSHy_data():
             raise TypeError("weighting must be a string of 'T1w' or 'T2w'.")
         elif not (self.weighting.capitalize() == 'T1w' or self.weighting.capitalize() == 'T2w'):
             raise ValueError("weighting must be a string of 'T1w' or 'T2w'.")
-        else
+        else:
             self.weighting = self.weighting.capitalize()
         if not isinstance(self.bimodal, bool):
             raise TypeError("bimodal must be a boolean.")
