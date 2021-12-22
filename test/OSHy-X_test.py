@@ -292,7 +292,7 @@ def unimodal_OSHy_data(mocker):
         ("sub-XX_T1w.nii.gz", ".", "./sub-XX"),
         ("sub-XX_T1w.nii.gz", " output ", "output/sub-XX"),
     ])
-def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir):
+def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -325,7 +325,7 @@ def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir):
         (False, True, True, "bias-corrected_cropped_"),
         (True, False, True, "denoised_cropped_")
     ])
-def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess):
+def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -357,7 +357,7 @@ def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess):
     ('T2W','T2w'),
     ('t2W','T2w')
 ])
-def test_Target_img(mocker,weighting,expected_weighting):
+def test_Target_img(mocker,weighting,expected_weighting,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -383,7 +383,7 @@ def test_Target_img(mocker,weighting,expected_weighting):
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img(mocker,img_file):
+def test_Target_img(mocker,img_file,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -409,7 +409,7 @@ def test_Target_img(mocker,img_file):
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img(mocker,out_dir):
+def test_Target_img(mocker,out_dir,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -435,7 +435,7 @@ def test_Target_img(mocker,out_dir):
     [
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
-def test_Target_img(mocker,weighting):
+def test_Target_img(mocker,weighting,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -461,7 +461,7 @@ def test_Target_img(mocker,weighting):
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img(mocker,crop):
+def test_Target_img(mocker,crop,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -487,7 +487,7 @@ def test_Target_img(mocker,crop):
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img(mocker,denoise):
+def test_Target_img(mocker,denoise,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -513,7 +513,7 @@ def test_Target_img(mocker,denoise):
     [
         1,2.0,{'file'},('file'),['file'],""
     ])
-def test_Target_img(mocker,b1_bias):
+def test_Target_img(mocker,b1_bias,bimodal_OSHy_data):
     mocker.patch('OSHyX.os.path.exists', return_value=True)
     mocker.patch('OSHyX.ants.image_write', return_value=None)
     mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
@@ -664,7 +664,7 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
                             denoise = True, 
                             b1_bias = True,
                             out_dir = 'out_dir',
-                            oshy_data = bimodal_OSHy_data
+                            oshy_data = unimodal_OSHy_data
                             )
 
         spy = mocker.spy(subprocess, 'Popen')
@@ -816,12 +816,12 @@ def test_threshold_structures(mocker, bimodal_OSHy_data):
 
     assert my_image.threshold_structures() == None
 
-    #spy_threshold.assert_any_call("An ANTsImage object", 1, 2)
+    spy_threshold.assert_any_call("An ANTsImage object", 1, 2)
     spy_threshold.assert_any_call("An ANTsImage object", 3, 4)
 
     spy_write.assert_any_call("Thresholded target!", 
     filename="output/sub-XX/sub-XX_hypothalamus.nii.gz"
     )
-    # spy_write.assert_any_call("Thresholded target!", 
-    # filename="output/sub-XX/sub-XX_fornix.nii.gz"
-    # )
+    spy_write.assert_any_call("Thresholded target!", 
+    filename="output/sub-XX/sub-XX_fornix.nii.gz"
+    )
