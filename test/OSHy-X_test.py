@@ -126,37 +126,37 @@ def unimodal_OSHy_data(mocker):
         "out_dir/42/42_",
         "out_dir/42/42_denoised_bias-corrected_cropped_T1w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,True,True,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,True,True,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_denoised_bias-corrected_cropped_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,True,True,"9000","T2w",
-        "9000/bar/bar_",
-        "9000/bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,True,True,"9000","T2w",
+        "9000/sub-01/sub-01_",
+        "9000/sub-01/sub-01_denoised_bias-corrected_cropped_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,True,True,".","T2w",
-        "./bar/bar_",
-        "./bar/bar_denoised_bias-corrected_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,True,True,".","T2w",
+        "./sub-01/sub-01_",
+        "./sub-01/sub-01_denoised_bias-corrected_cropped_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,False,False,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_denoised_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,False,False,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_denoised_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,True,False,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_denoised_bias-corrected_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,True,False,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_denoised_bias-corrected_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",False,True,True,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_bias-corrected_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",False,True,True,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_bias-corrected_cropped_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",False,False,True,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",False,False,True,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_cropped_T2w.nii.gz"
         ),
-        ("sub-XX_T1w.nii.gz",True,False,True,"out_dir","T2w",
-        "out_dir/bar/bar_",
-        "out_dir/bar/bar_denoised_cropped_T2w.nii.gz"
+        ("sub-01_T1w.nii.gz",True,False,True,"out_dir","T2w",
+        "out_dir/sub-01/sub-01_",
+        "out_dir/sub-01/sub-01_denoised_cropped_T2w.nii.gz"
         )
     ])
 def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
