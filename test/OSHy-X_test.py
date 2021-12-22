@@ -703,6 +703,7 @@ def test_create_mosaic(mocker, bimodal_OSHy_data):
     mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
     mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
     mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHyX.ants.plot', return_value=None)
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
@@ -741,7 +742,7 @@ def test_calc_volume(mocker, bimodal_OSHy_data):
                         oshy_data = bimodal_OSHy_data
                         )
 
-    spy = mocker.spy(ants, 'plot')
+    spy = mocker.spy(subprocess, 'Popen')
     assert my_image.calc_volume() == None
 
     spy.assert_called_once_with(
