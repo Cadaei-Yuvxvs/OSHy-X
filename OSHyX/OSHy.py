@@ -335,7 +335,23 @@ class OSHy_data():
         self.weighting = weighting
         self.bimodal = bimodal
 
-        if crop:
+        # Input checks
+        if not isinstance(self.tesla, str):
+            raise TypeError("tesla must be a string of '3' or '7'.")
+        elif self.tesla != '3' or self.tesla != '7':
+            raise ValueError("tesla must be a string of '3' or '7'.")
+
+        if not isinstance(self.weighting, str):
+            raise TypeError("weighting must be a string of 'T1w' or 'T2w'.")
+        elif self.weighting != 'T1w' or self.weighting != 'T2w':
+            raise ValueError("weighting must be a string of 'T1w' or 'T2w'.")
+
+        if not isinstance(self.bimodal, bool):
+            raise TypeError("bimodal must be a boolean.")
+
+        if not isinstance(crop, bool):
+            raise TypeError("crop must be a boolean.")
+        elif crop:
             self.crop = "cropped"
         else:
             self.crop = "whole"

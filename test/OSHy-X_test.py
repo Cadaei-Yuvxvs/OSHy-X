@@ -56,7 +56,183 @@ def test_convert_to_bool(boolstrings):
         convert_to_bool(boolstrings)
     assert str(error_info.value) == 'Input must be a string.'
 
-oshy_dat = None
+# Test OSHy_data
+## tesla
+@pytest.mark.parametrize("tesla", [
+    3,7,1.06,9000,True,False,[],('3'),{},'37','7T','3T'
+]
+def test_OSHy_data_tesla(mocker, tesla):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    with pytest.raises(Exception) as error_info:
+        oshy_dat = OSHy_data(tesla = tesla, 
+                            weighting = 'T1w',
+                            bimodal = True,
+                            crop = True)
+    
+    assert str(error_info.value) == "tesla must be a string of '3' or '7'."
+
+@pytest.mark.parametrize("tesla", [
+    '3','7'
+]
+def test_OSHy_data_tesla(mocker, tesla):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    oshy_dat = OSHy_data(tesla = tesla,
+                         weighting = 'T1w',
+                         bimodal = True,
+                         crop = True)
+    assert oshy_dat.tesla == tesla
+
+## weighting
+@pytest.mark.parametrize("weighting", [
+    3,7,1.06,9000,True,False,[],('T1w'),{},'T3w','w1T'
+]
+def test_OSHy_data_weighting(mocker, weighting):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    with pytest.raises(Exception) as error_info:
+        oshy_dat = OSHy_data(tesla = '7', 
+                            weighting = weighting,
+                            bimodal = True,
+                            crop = True)
+    
+    assert str(error_info.value) == "weighting must be a string of 'T1w' or 'T2w'."
+
+@pytest.mark.parametrize("weighting", [
+    'T1w','T2w'
+]
+def test_OSHy_data_weighting(mocker, weighting):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    oshy_dat = OSHy_data(tesla = '7',
+                         weighting = weighting,
+                         bimodal = True,
+                         crop = True)
+    assert oshy_dat.weighting == weighting
+
+## bimodal
+@pytest.mark.parametrize("bimodal", [
+    7,1.06,[],('T1w'),{},'foo',
+]
+def test_OSHy_data_bimodal(mocker, bimodal):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    with pytest.raises(Exception) as error_info:
+        oshy_dat = OSHy_data(tesla = '7', 
+                            weighting = 'T1w',
+                            bimodal = bimodal,
+                            crop = True)
+    
+    assert str(error_info.value) == "bimodal must be a boolean."
+
+@pytest.mark.parametrize("bimodal", [
+    True,False
+]
+def test_OSHy_data_bimodal(mocker, bimodal):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    oshy_dat = OSHy_data(tesla = '7',
+                         weighting = 'T1w',
+                         bimodal = bimodal,
+                         crop = True)
+
+    assert isinstance(oshy_dat.tesla, bool)
+
+## crop
+@pytest.mark.parametrize("crop", [
+    7,1.06,[],('T1w'),{},'foo',
+]
+def test_OSHy_data_crop(mocker, crop):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    with pytest.raises(Exception) as error_info:
+        oshy_dat = OSHy_data(tesla = '7', 
+                            weighting = 'T1w',
+                            bimodal = True,
+                            crop = crop)
+    
+    assert str(error_info.value) == "crop must be a boolean."
+
+@pytest.mark.parametrize("crop,expected_crop", [
+    (True, "cropped"),
+    (False, "whole")
+]
+def test_OSHy_data_bimodal(mocker, crop, expected_crop):
+    mocker.patch(
+        'OSHyX.ants.image_read',
+        return_value="An ANTsImage object"
+    )
+
+    mocker.patch(
+        'OSHyX.glob.glob',
+        return_value=["image.nii.gz" for i in range(10)]
+    )
+
+    oshy_dat = OSHy_data(tesla = '7',
+                         weighting = 'T1w',
+                         bimodal = True,
+                         crop = crop)
+
+    assert oshy_dat.crop == expected_crop
+
+
 # Create an instance of OSHy_data. Methods are never called outside of this class.
 @pytest.fixture
 def bimodal_OSHy_data(mocker):
@@ -96,9 +272,6 @@ def unimodal_OSHy_data(mocker):
 
     return(oshy_dat)
 
-
-# my_image.run_JLF2(nprocs=args['nthreads'])
-
 # if convert_to_bool(args['mosaic']):
 #     my_image.create_mosaic()
 
@@ -108,7 +281,9 @@ def unimodal_OSHy_data(mocker):
 
 
 @pytest.mark.parametrize(
-    "img_filename,denoise,b1_bias,crop,out_dir,weight,expected_outdir,expected_target", 
+    "img_filename,denoise,b1_bias,crop,out_dir,weight,"\
+    "expected_outdir,"\
+    "expected_target", 
     [
         ("sub-XX_T1w.nii.gz",True,True,True,"out_dir","T1w",
         "out_dir/sub-XX/sub-XX_",
