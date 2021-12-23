@@ -169,8 +169,8 @@ class Target_img():
 
         print(f"Registering {self.sub} to template.")
 
-        template = self.oshy_data.template
-        template_box = self.oshy_data.template_box
+        template = self.oshy_data.template()
+        template_box = self.oshy_data.template_box()
 
         registered_dict = ants.registration(template, self.target_processed, 
         "SyN", reg_iterations = (50, 25, 0))
@@ -251,8 +251,8 @@ class Target_img():
         Return list: A list of strings.
         """
         
-        atlases = self.oshy_data.atlas_list
-        labels = self.oshy_data.label_list
+        atlases = self.oshy_data.get_atlases()
+        labels = self.oshy_data.get_labels()
 
         atlases.sort()
         labels.sort()
@@ -383,11 +383,6 @@ class OSHy_data():
             self.crop = "cropped"
         else:
             self.crop = "whole"
-
-        self.template = self.get_template()
-        self.template_box = self.get_template_box()
-        self.atlas_list = self.get_atlases()
-        self.label_list = self.get_labels()
 
     def get_template(self):
         """Retrieves the template.

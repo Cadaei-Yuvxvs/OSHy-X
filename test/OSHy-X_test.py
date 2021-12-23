@@ -403,7 +403,7 @@ def test_Target_img(mocker,img_file,bimodal_OSHy_data):
                             out_dir = 'out_dir',
                             oshy_data = bimodal_OSHy_data
                             )
-    assert str(error_info.value).find("Target must be a string") > -1
+    assert "Target must be a string" in str(error_info.value)
 
 @pytest.mark.parametrize("out_dir",
     [
@@ -429,7 +429,7 @@ def test_Target_img(mocker,out_dir,bimodal_OSHy_data):
                             out_dir = out_dir,
                             oshy_data = bimodal_OSHy_data
                             )
-    assert str(error_info.value).find("Output directory must be a string") > -1
+    assert "Output directory must be a string" in str(error_info.value)
 
 @pytest.mark.parametrize("weighting",
     [
@@ -455,7 +455,7 @@ def test_Target_img(mocker,weighting,bimodal_OSHy_data):
                             out_dir = 'out_dir',
                             oshy_data = bimodal_OSHy_data
                             )
-    assert str(error_info.value).find("Weighting must be a string") > -1
+    assert "Weighting must be a string" in error_info.value
 
 @pytest.mark.parametrize("crop",
     [
