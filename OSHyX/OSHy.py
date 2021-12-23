@@ -169,8 +169,8 @@ class Target_img():
 
         print(f"Registering {self.sub} to template.")
 
-        template = self.oshy_data.template()
-        template_box = self.oshy_data.template_box()
+        template = self.oshy_data.get_template()
+        template_box = self.oshy_data.get_template_box()
 
         registered_dict = ants.registration(template, self.target_processed, 
         "SyN", reg_iterations = (50, 25, 0))
@@ -392,10 +392,10 @@ class OSHy_data():
         Return ANTsImage: A template image.
         """
 
-        self.template = ants.image_read(
+        template = ants.image_read(
             f"/OSHy/templates/{self.tesla}T_template.nii.gz")
 
-        return(self.template)
+        return(template)
 
     def get_template_box(self):
         """Retrieves the template bounding box.
@@ -405,10 +405,10 @@ class OSHy_data():
         Return ANTsImage: A bounding box in template space.
         """
 
-        self.template_box = ants.image_read(
+        template_box = ants.image_read(
             f"/OSHy/templates/{self.tesla}T_box.nii.gz")
 
-        return(self.template_box)
+        return(template_box)
 
     def get_atlases(self):
         """Retrieves the atlas intensity images.
