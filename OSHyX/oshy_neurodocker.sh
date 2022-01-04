@@ -9,7 +9,7 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --run "mkdir -p /OSHy/atlases/3T" \
 --run "mkdir /OSHy/atlases/7T" \
 --run "mkdir /OSHy/templates" \
---copy OSHy/code/OSHy.py /OSHy/ \
+--copy OSHy/OSHyX/OSHy.py /OSHy/ \
 --copy $( find ./data/atlases/3T -iname *gz ) /OSHy/atlases/3T/ \
 --copy $( find ./data/atlases/7T -iname *gz ) /OSHy/atlases/7T/ \
 --copy $( find ./data/templates -iname *gz ) /OSHy/templates/ \
@@ -17,4 +17,4 @@ docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --entrypoint "python -u /OSHy/OSHy.py" \
 > OSHy.Dockerfile
 
-docker build --tag jerync/oshyx_0.2:20211130 --file OSHy.Dockerfile .
+docker build --tag jerync/oshyx_0.3:20211223 --file OSHy.Dockerfile .

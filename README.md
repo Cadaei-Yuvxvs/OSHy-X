@@ -1,6 +1,6 @@
 # Open Source Hypothalamic-ForniX (OSHy-X) Atlases and Segmentation Tool for 3T and 7T
 
-*Version 0.2*
+*Version 0.3*
 
 OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. 
 
@@ -23,15 +23,15 @@ Follow instructions [here](https://neurodesk.github.io/docs/neurodesktop/getting
 1. Install Docker [here](https://docs.docker.com/get-docker/).
 2. Open a terminal and run:
 
-`docker pull jerync/oshyx_0.2:20211130`
+`docker pull jerync/oshyx_0.3:20211223`
 To pull the container. Or run: 
 
-`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.2:20211130 --target /data/input_file.nii.gz --outdir /data/output_directory`
+`docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.3:20211223 --target /data/input_file.nii.gz --outdir /data/output_directory`
 
 ### Singularity
 1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html).
 2. Open a terminal and run 
-`singularity pull docker://jerync/oshyx_0.2:20211130 oshyx_0.2.sif`
+`singularity pull docker://jerync/oshyx_0.3:20211223 oshyx_0.3.sif`
 To pull the container. 
 
 ## Usage
@@ -40,12 +40,12 @@ To pull the container.
 ### Docker and Singularity
 
 ```
-Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.2:20211130 
+Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.3:20211223 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
 
-       singularity run -B /path/to/data:/data oshyx_0.2.sif 
+       singularity run -B /path/to/data:/data oshyx_0.3.sif 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
