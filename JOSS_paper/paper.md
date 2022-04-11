@@ -9,7 +9,7 @@ tags:
   - Segmentation
   - Multi-atlas label fusion
 authors:
-  - name: Jeryn Chang
+  - name: Jeryn Chang^[Corresponding author]
     orcid: 0000-0002-6659-365X
     affiliation: 1
   - name: Frederik Steyn
@@ -32,7 +32,7 @@ authors:
   - name: Markus Barth
     orcid: 0000-0002-0520-1843
     affiliation: "7,8"
-  - name: Thomas Shaw^[Corresponding author]
+  - name: Thomas Shaw
     orcid: 0000-0003-2490-0532
     affiliation: "2,7,8"
 
