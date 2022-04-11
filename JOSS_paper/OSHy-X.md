@@ -47,15 +47,15 @@ affiliations:
    index: 4
  - name: Australian Institute of Bioengineering and Nanotechnology, The University of Queensland
    index: 5
- - name: QIMR Berghofer Medical Research Institute, Brisbane, Australia
+ - name: ActiGraph, LLC, Pensacola, FL, USA
    index: 6
  - name: Centre for Advanced Imaging, The University of Queensland
    index: 7
  - name: School of Information Technology and Electrical Engineering, The University of Queensland 
    index: 8
- - name: CSIRO Health and Biosecurity, Brisbane, Australia
+ - name: CSIRO Health and Biosecurity, The Australian eHealth Research Centre, Brisbane, Australia
    index: 9
-date: 16 December 2021
+date: 11 April 2022
 bibliography: OSHy-X.bib
 ---
 
@@ -121,6 +121,6 @@ Funding for EATT4MND was provided by Wesley Medical Research (The Wesley Hospita
 
 The authors acknowledge the facilities and scientific and technical assistance of the National Imaging Facility, a National Collaborative Research Infrastructure Strategy (NCRIS) capability, at the Centre for Advanced Imaging, The University of Queensland. This research was undertaken with the assistance of resources and services from the Queensland Cyber Infrastructure Foundation (QCIF). The authors gratefully acknowledge Aiman Al Najjer, Nicole Atcheson, Anita Burns, Saskia Bollmann, and Amelia Ceslis for acquiring data.
 
-JC is supported by the UQ Graduate School Scholarship (RTP). STN is supported by a FightMND Mid-Career Fellowship. MB acknowledges funding from Australian Research Council Future Fellowship grant FT140100865. MB and SB acknowledge the ARC Training Centre for Innovation in Biomedical Imaging Technology (CIBIT). TS is supported by a Motor Neurone Disease Research Australia (MNDRA) Postdoctoral Research Fellowship (PDF2112). 
+JC is supported by the UQ Graduate School Scholarship (RTP) and the Motor Neuron Disease Australia Phd top-up scholarship grant. STN is supported by a FightMND Mid-Career Fellowship. MB acknowledges funding from the Australian Research Council Future Fellowship grant FT140100865. MB and SB acknowledge the ARC Training Centre for Innovation in Biomedical Imaging Technology (CIBIT). TS is supported by a Motor Neurone Disease Research Australia (MNDRA) Postdoctoral Research Fellowship (PDF2112). 
 
 # References
