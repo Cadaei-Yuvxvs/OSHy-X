@@ -73,7 +73,7 @@ outperforms a deep-learning segmentation method for the hypothalamus
 [@Billot:2020]. We have previously demonstrated the use of `OSHy-X` on a cohort 
 of 329 non-neurodegenerative control participants and 42 patients with ALS to 
 investigate reduced hypothalamic volume and its association with appetite, 
-hypermetabolism and weight loss [@Chang:2021].
+hypermetabolism and weight loss [@Chang:2022].
 
 # Statement of need
 
