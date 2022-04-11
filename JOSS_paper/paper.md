@@ -85,7 +85,7 @@ Segmentation of small structures of the brain including the hypothalamus and for
 
 ## Atlas
 
-Twenty atlases were derived from manual segmentation of the hypothalamus-fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2021].
+Twenty atlases were derived from manual segmentation of the hypothalamus-fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2022].
 
 ## Tool
 
