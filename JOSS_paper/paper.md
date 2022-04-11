@@ -56,7 +56,7 @@ affiliations:
  - name: CSIRO Health and Biosecurity, The Australian eHealth Research Centre, Brisbane, Australia
    index: 9
 date: 11 April 2022
-bibliography: OSHy-X.bib
+bibliography: paper.bib
 ---
 
 # Summary
