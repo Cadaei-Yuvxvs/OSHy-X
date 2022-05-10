@@ -467,9 +467,9 @@ def convert_to_bool(b_str:str):
 if __name__ == "__main__":
 
     print(
-        "\nOSHy-X v0.1\n"\
+        "\nOSHy-X v0.3\n"\
         "MIT License\n"
-        "Copyright (c) 2021 Jeryn\n"
+        "Copyright (c) 2021 Jeryn Chang\n"
         "Visit https://github.com/Cadaei-Yuvxvs/OSHy-X for more information.\n")
 
     my_args = argparse.ArgumentParser()
