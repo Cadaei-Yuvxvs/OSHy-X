@@ -31,7 +31,7 @@ To pull the container. Or run:
 ### Singularity
 1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html).
 2. Open a terminal and run 
-`singularity pull docker://jerync/oshyx_0.3:20211223 oshyx_0.3.sif`
+`singularity pull oshyx_0.3.sif docker://jerync/oshyx_0.3`
 To pull the container. 
 
 ## Usage
