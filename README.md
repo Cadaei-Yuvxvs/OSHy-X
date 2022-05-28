@@ -101,11 +101,11 @@ All output is written to the output directory (specified using the `-o/--outdir`
 Contents of the output include:
 
 * `sub-XX_Labels.nii.gz`: Output from Joint Label Fusion. The label file for the left and right hemispheres of the Hypothalamus and Fornix. If `--crop` is `True` then this label file will also be cropped. The labels are as follows:
-    1. Left Hypothalamus
-    2. Right Hypothalamus
-    3. Right Fornix
-    4. Left Fornix
-* `sub-XX_ressampled_Labels.nii.gz`: sub-XX_Labels.nii.gz but resampled to the input target image.
+    - 1 Left Hypothalamus
+    - 2 Right Hypothalamus
+    - 3 Right Fornix
+    - 4 Left Fornix
+* `sub-XX_resampled_Labels.nii.gz`: sub-XX_Labels.nii.gz but resampled to the input target image.
 * `sub-XX_hypothalamus.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only hypothalamus labels.
 * `sub-XX_fornix.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only fornix labels.
 * `sub-XX_mosaic.png`: A 16 slice coronal visualisation of the segmentation.
