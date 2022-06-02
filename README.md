@@ -105,10 +105,14 @@ Contents of the output include:
     - 2 Right Hypothalamus
     - 3 Right Fornix
     - 4 Left Fornix
+* `sub-XX_Intensity.nii.gz`: The input intensity image for Joint Label Fusion segmentation.
 * `sub-XX_resampled_Labels.nii.gz`: sub-XX_Labels.nii.gz but resampled to the input target image.
 * `sub-XX_hypothalamus.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only hypothalamus labels.
 * `sub-XX_fornix.nii.gz`: sub-XX_resampled_Labels.nii.gz but with only fornix labels.
 * `sub-XX_mosaic.png`: A 16 slice coronal visualisation of the segmentation.
+* `*_log.txt`: The log of the piecewise registration between the atlases and the target image.
+* `sub-XX_TargetMaskImageMajorityVoting.nii.gz`: Labelled voxels where Joint Label Fusion was not performed. This is the case when 80% or more of the atlases agree on the same voxel.
+* `sub-XX_TargetMaskImageMajorityVoting_Mask`: A mask of voxels where Joint Label Fusion segmentation is performed.
 * `sub-XX_volumes.csv`: Volumes of the four labels (as described above). Units for volume are in mm<sup>3</sup>.
 
 ## Community
