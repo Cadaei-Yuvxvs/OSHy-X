@@ -2,9 +2,9 @@
 
 *Version 0.3*
 
-OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. 
+OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. It is designed to only run inside a container. See [below for installation instructions](#Installation).
 
-If you intend to use OSHy-X, please cite this abstract: TBA
+OSHy-X is currently [under review](https://github.com/openjournals/joss-reviews/issues/4368) with the Journal of Open Source Software.
 
 ![The user inputs a T1w or T2w image. They are given the options for denoising, B1 bias field correction and image cropping. After Joint Label Fusion, the given output are the label, volume and mosaic files.](Media/OSHy_figure_1.GIF "OSHy pipeline")
 
@@ -12,7 +12,7 @@ If you intend to use OSHy-X, please cite this abstract: TBA
 
 ## Installation
 
-You have the option of running OSHy-X via NeuroDesk, a Docker container by itself, or a Singularity container.
+You have the option of running OSHy-X via NeuroDesk, a Docker container by itself, or a Singularity container. OSHy-X (and `OSHy.py`) is not designed to run outside of a container.
 
 ### Neurodesk
 

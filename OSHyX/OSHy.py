@@ -1,4 +1,13 @@
 #!/opt/miniconda-latest/bin/python -u
+# -*- coding: utf-8 -*-
+
+"""OSHy.py
+OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that 
+automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. 
+
+OSHy.py is designed to only run inside a container.
+"""
+
 import ants
 import os
 import glob
