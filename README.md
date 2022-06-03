@@ -2,9 +2,7 @@
 
 *Version 0.3*
 
-OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. 
-
-OSHY-X is designed to only run inside a container. See [below for installation instructions](#Installation).
+OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. It is designed to only run inside a container. See [below for installation instructions](#Installation).
 
 OSHy-X is currently [under review](https://github.com/openjournals/joss-reviews/issues/4368) with the Journal of Open Source Software.
 
