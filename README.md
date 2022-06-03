@@ -117,6 +117,6 @@ Contents of the output include:
 
 ## Community
 
-Any issues or suggestions can be submitted to https://github.com/Cadaei-Yuvxvs/OSHy-X/issues.
+We welcome any contributions to OSHy-X, whether they are reports for bugs, feature enhancements, or pull requests.
 
-Feel free to fork OSHy-X and submit a pull request if you would like to contribute to this project.
+To contribute to OSHy-X please visit our [contribute page](https://github.com/Cadaei-Yuvxvs/OSHy-X/contribute) and read our contributing guidelines.
