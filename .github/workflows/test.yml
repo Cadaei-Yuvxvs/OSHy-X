@@ -1,5 +1,5 @@
-name: Test OSHy-X
-on: [push]
+name: Test code logic
+on: [workflow_call]
 
 jobs:
   test-oshyx:
