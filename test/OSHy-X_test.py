@@ -1,6 +1,6 @@
 import pytest
 from pytest_mock import mocker
-from OSHyX import *
+from OSHy import *
 
 # Test convert_to_bool
 @pytest.mark.parametrize("boolstrings", [
