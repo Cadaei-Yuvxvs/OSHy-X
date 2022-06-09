@@ -3,7 +3,7 @@
 docker run --rm repronim/neurodocker:0.7.0 generate docker \
 --pkg-manager apt -b debian:bullseye-slim \
 --ants version=2.3.1 \
---miniconda version=latest use_env=base conda_install="python=3.8 pandas scikit-learn julia=1.6.3" pip_install="antspyx psutil" \
+--miniconda version=latest use_env=base conda_install="python=3.8 pandas scikit-learn julia=1.6.3" pip_install="antspyx psutil pytest==6.2 pytest-mock==3.6.1 argparse==1.4.0" \
 --env JULIA_DEPOT_PATH=/opt/julia_depot \
 --run "julia -e 'using Pkg; Pkg.add(\"MriResearchTools\");'" \
 --run "mkdir -p /OSHy/atlases/3T" \
