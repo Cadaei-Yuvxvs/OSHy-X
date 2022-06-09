@@ -25,4 +25,4 @@ jobs:
         python-version: 3.8
     - name: test OSHy-X pipeline
       run: |
-        bash tests/run_tests.sh
+        /bin/bash test/run_tests.sh
