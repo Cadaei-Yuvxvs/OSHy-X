@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python -m pytest /OSHy
+python -m pytest /tmp

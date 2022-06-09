@@ -7,4 +7,4 @@ container=$( cat /tmp/OSHy-X/README.md | grep "docker pull" | cut -d " " -f 3 | 
 
 sudo docker pull $container
 
-sudo docker run -v /tmp/OSHy-X/test:/tmp --entrypoint "python" $container -m pytest /tmp/
+sudo docker run -v /tmp/OSHy-X/test:/tmp --entrypoint "/bin/bash" $container /tmp/run_pytest.sh
