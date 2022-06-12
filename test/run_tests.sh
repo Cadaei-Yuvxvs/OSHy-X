@@ -28,11 +28,12 @@ sudo docker run -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp
 
 for out_file in ${out_files_suffix[@]}
 do
-    if [ -f /tmp/sub-test/sub-test_${out_file} ] 
+    sub_out_file=sub-test${out_file}
+    if [ -f /tmp/sub-test/${sub_out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-test$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file ($sub_out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-test$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file ($sub_out_file) does not exist."
         exit 1
     fi
 done
@@ -84,11 +85,12 @@ sudo docker run -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp -b True
 
 for out_file in ${out_bimodal_files_suffix[@]}
 do
-    if [ -f /tmp/sub-test/sub-test_${out_file} ] 
+    sub_out_file=sub-test${out_file}
+    if [ -f /tmp/sub-test/${sub_out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-test$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file ($sub_out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-test$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file ($sub_out_file) does not exist."
         exit 1
     fi
 done
@@ -130,11 +132,12 @@ sudo docker run -v /tmp:/tmp $container -t /OSHy/atlases/3T/sub-05_whole_Warped_
 
 for out_file in ${out_T2w_files_suffix[@]}
 do
-    if [ -f /tmp/sub-05/sub-05_${out_file} ] 
+    sub_out_file=sub-test${out_file}
+    if [ -f /tmp/sub-test/${sub_out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-05$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file ($sub_out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-05$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file ($sub_out_file) does not exist."
         exit 1
     fi
 done
@@ -170,11 +173,12 @@ sudo docker run $container -t /OSHy/atlases/7T/sub-P0004_whole_ses-01_T1w_deface
 
 for out_file in ${out_7T_files_suffix[@]}
 do
-    if [ -f /tmp/sub-P0004/sub-P0004_${out_file} ] 
+    sub_out_file=sub-test${out_file}
+    if [ -f /tmp/sub-test/${sub_out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-P0004$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file ($sub_out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-P0004$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file ($sub_out_file) does not exist."
         exit 1
     fi
 done
