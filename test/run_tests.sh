@@ -30,9 +30,9 @@ for out_file in ${out_files_suffix[@]}
 do
     if [ -f /tmp/sub-test/sub-test_${out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-test_$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file (sub-test$out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-test_$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file (sub-test$out_file) does not exist."
         exit 1
     fi
 done
@@ -86,9 +86,9 @@ for out_file in ${out_bimodal_files_suffix[@]}
 do
     if [ -f /tmp/sub-test/sub-test_${out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-test_$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file (sub-test$out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-test_$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file (sub-test$out_file) does not exist."
         exit 1
     fi
 done
@@ -132,9 +132,9 @@ for out_file in ${out_T2w_files_suffix[@]}
 do
     if [ -f /tmp/sub-05/sub-05_${out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-05_$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file (sub-05$out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-05_$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file (sub-05$out_file) does not exist."
         exit 1
     fi
 done
@@ -172,9 +172,9 @@ for out_file in ${out_7T_files_suffix[@]}
 do
     if [ -f /tmp/sub-P0004/sub-P0004_${out_file} ] 
     then
-        echo "[DEBUG] Test OK: Regular output file (sub-P0004_$out_file) exists."
+        echo "[DEBUG] Test OK: Regular output file (sub-P0004$out_file) exists."
     else
-        echo "[DEBUG] Test FAILED: Regular output file (sub-P0004_$out_file) does not exist."
+        echo "[DEBUG] Test FAILED: Regular output file (sub-P0004$out_file) does not exist."
         exit 1
     fi
 done
