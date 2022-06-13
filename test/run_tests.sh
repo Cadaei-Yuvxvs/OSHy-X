@@ -24,7 +24,7 @@ sudo docker run -v /tmp/OSHy-X/test:/tmp --entrypoint "python" $container -m pyt
 
 echo "[DEBUG] Running default pipeline"
 
-sudo docker run -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp
+sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp
 
 for out_file in ${out_files_suffix[@]}
 do
@@ -42,7 +42,7 @@ seg_vols=$( cat /tmp/sub-test/sub-test_volumes.csv | cut -d "," -f 7 | tail -n 4
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 900 ] 
+    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -52,6 +52,8 @@ do
 done
 
 sudo rm -r /tmp/sub-test
+
+docker system prune
 
 echo "[DEBUG] Running bimodal pipeline"
 
@@ -81,7 +83,7 @@ out_bimodal_files_suffix=("_Intensity.nii.gz" "_Labels.nii.gz" \
 "_sub-48_cropped_T1w_19_log.txt" \
 "_volumes.csv")
 
-sudo docker run -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp -b True
+sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/sub-test.nii.gz -o /tmp -b True
 
 for out_file in ${out_bimodal_files_suffix[@]}
 do
@@ -99,7 +101,7 @@ seg_vols=$( cat /tmp/sub-test/sub-test_volumes.csv | cut -d "," -f 7 | tail -n 4
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 900 ] 
+    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -109,6 +111,8 @@ do
 done
 
 sudo rm -r /tmp/sub-test
+
+docker system prune
 
 echo "[DEBUG] Running pipeline with T2w input"
 
@@ -128,7 +132,7 @@ out_T2w_files_suffix=("_Intensity.nii.gz" "_Labels.nii.gz" \
 "_sub-48_N4Bias_Denoised_cropped_registered_T2w_9_log.txt" \
 "_volumes.csv")
 
-sudo docker run -v /tmp:/tmp $container -t /OSHy/atlases/3T/sub-05_whole_Warped_FLAIR_T2w_defaced.nii.gz -o /tmp -w T2w
+sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/atlases/3T/sub-05_whole_Warped_FLAIR_T2w_defaced.nii.gz -o /tmp -w T2w
 
 for out_file in ${out_T2w_files_suffix[@]}
 do
@@ -146,7 +150,7 @@ seg_vols=$( cat /tmp/sub-05/sub-05_volumes.csv | cut -d "," -f 7 | tail -n 4 )
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 900 ] 
+    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -156,6 +160,8 @@ do
 done
 
 sudo rm -r /tmp/sub-05
+
+docker system prune
 
 echo "[DEBUG] Running pipeline with 7T input"
 
@@ -169,7 +175,7 @@ out_7T_files_suffix=("_Intensity.nii.gz" "_denoised_bias-corrected_cropped_T1w.n
 "_mosaic.png" "_sub-H0111_cropped_T1w_2_log.txt" "_sub-P0016_cropped_T1w_9_log.txt"\
 "_sub-P0004_cropped_T1w_6_log.txt" "_volumes.csv")
 
-sudo docker run $container -t /OSHy/atlases/7T/sub-P0004_whole_ses-01_T1w_defaced.nii.gz -o /tmp -x 7
+sudo docker run --memory-swap -1 $container -t /OSHy/atlases/7T/sub-P0004_whole_ses-01_T1w_defaced.nii.gz -o /tmp -x 7
 
 for out_file in ${out_7T_files_suffix[@]}
 do
@@ -187,7 +193,7 @@ seg_vols=$( cat /tmp/sub-P0004/sub-P0004_volumes.csv | cut -d "," -f 7 | tail -n
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 900 ] 
+    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
