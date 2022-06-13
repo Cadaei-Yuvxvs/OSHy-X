@@ -53,7 +53,7 @@ done
 
 sudo rm -r /tmp/sub-test
 
-docker system prune
+docker system prune --force
 
 echo "[DEBUG] Running bimodal pipeline"
 
@@ -112,7 +112,7 @@ done
 
 sudo rm -r /tmp/sub-test
 
-docker system prune
+docker system prune --force
 
 echo "[DEBUG] Running pipeline with T2w input"
 
@@ -161,7 +161,7 @@ done
 
 sudo rm -r /tmp/sub-05
 
-docker system prune
+docker system prune --force
 
 echo "[DEBUG] Running pipeline with 7T input"
 
