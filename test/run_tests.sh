@@ -42,7 +42,7 @@ seg_vols=$( cat /tmp/sub-test/sub-test_volumes.csv | cut -d "," -f 7 | tail -n 4
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
+    if [ $(echo "($seg_vol > 100) && ($seg_vol < 700)" | bc -l) -eq 1 ]
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -101,7 +101,7 @@ seg_vols=$( cat /tmp/sub-test/sub-test_volumes.csv | cut -d "," -f 7 | tail -n 4
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
+    if [ $(echo "($seg_vol > 100) && ($seg_vol < 700)" | bc -l) -eq 1 ]
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -144,7 +144,7 @@ seg_vols=$( cat /tmp/sub-P0004/sub-P0004_volumes.csv | cut -d "," -f 7 | tail -n
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
+    if [ $(echo "($seg_vol > 100) && ($seg_vol < 700)" | bc -l) -eq 1 ]
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
@@ -187,7 +187,7 @@ seg_vols=$( cat /tmp/sub-P0016/sub-P0016_volumes.csv | cut -d "," -f 7 | tail -n
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $seg_vol -ge 100 ] && [ $seg_vol -le 700 ] 
+    if [ $(echo "($seg_vol > 100) && ($seg_vol < 700)" | bc -l) -eq 1 ]
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
