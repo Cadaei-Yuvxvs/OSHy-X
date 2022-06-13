@@ -123,7 +123,7 @@ out_7T_files_suffix=("_Intensity.nii.gz" "_denoised_bias-corrected_cropped_T1w.n
 "_sub-P0011_cropped_T1w_8_log.txt" "_TargetMaskImageMajorityVoting.nii.gz" \
 "_hypothalamus.nii.gz" "_sub-H0108_cropped_T1w_1_log.txt" \
 "_sub-P0003_cropped_T1w_5_log.txt" "_TargetMaskImageMajorityVoting_Mask.nii.gz" \
-"_mosaic.png" "_sub-H0111_cropped_T1w_2_log.txt" "_sub-P0016_cropped_T1w_9_log.txt"\
+"_mosaic.png" "_sub-H0111_cropped_T1w_2_log.txt" "_sub-P0016_cropped_T1w_9_log.txt" \
 "_sub-P0004_cropped_T1w_6_log.txt" "_volumes.csv")
 
 sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/atlases/7T/sub-P0004_whole_ses-01_T1w_defaced.nii.gz -o /tmp -x 7
@@ -166,7 +166,7 @@ out_T2w_files_suffix=("_Intensity.nii.gz" "_denoised_bias-corrected_cropped_T1w.
 "_sub-P0011_cropped_T2w_TSE_resampled_8_log.txt" "_TargetMaskImageMajorityVoting.nii.gz" \
 "_hypothalamus.nii.gz" "_sub-H0108_cropped_T2w_TSE_resampled_1_log.txt" \
 "_sub-P0003_cropped_T2w_TSE_resampled_5_log.txt" "_TargetMaskImageMajorityVoting_Mask.nii.gz" \
-"_mosaic.png" "_sub-H0111_cropped_T2w_TSE_resampled_2_log.txt" "_sub-P0016_cropped_T2w_TSE_resampled_9_log.txt"\
+"_mosaic.png" "_sub-H0111_cropped_T2w_TSE_resampled_2_log.txt" "_sub-P0016_cropped_T2w_TSE_resampled_9_log.txt" \
 "_sub-P0004_cropped_T2w_TSE_resampled_6_log.txt" "_volumes.csv")
 
 sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/atlases/7T/sub-P0016_whole_T2w.nii.gz -o /tmp -x 7 -w T2w
