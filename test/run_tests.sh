@@ -159,22 +159,27 @@ docker system prune --force
 
 echo "[DEBUG] Running pipeline with T2w input"
 
-out_T2w_files_suffix=("_Intensity.nii.gz" "_denoised_bias-corrected_cropped_T1w.nii.gz" \
-"_resampled_Labels.nii.gz" "_sub-H0112_cropped_T2w_TSE_resampled_3_log.txt"  \
-"_sub-P0008_cropped_T2w_TSE_resampled_7_log.txt" "_Labels.nii.gz" "_fornix.nii.gz" \
-"_sub-H0101_cropped_T2w_TSE_resampled_0_log.txt"  "_sub-H0115_cropped_T2w_TSE_resampled_4_log.txt"  \
-"_sub-P0011_cropped_T2w_TSE_resampled_8_log.txt" "_TargetMaskImageMajorityVoting.nii.gz" \
-"_hypothalamus.nii.gz" "_sub-H0108_cropped_T2w_TSE_resampled_1_log.txt" \
-"_sub-P0003_cropped_T2w_TSE_resampled_5_log.txt" "_TargetMaskImageMajorityVoting_Mask.nii.gz" \
-"_mosaic.png" "_sub-H0111_cropped_T2w_TSE_resampled_2_log.txt" "_sub-P0016_cropped_T2w_TSE_resampled_9_log.txt" \
-"_sub-P0004_cropped_T2w_TSE_resampled_6_log.txt" "_volumes.csv")
+out_T2w_files_suffix=("_Intensity.nii.gz" "_fornix.nii.gz" \
+"_sub-05_N4Bias_Denoised_cropped_registered_T2w_1_log.txt" \
+"_sub-26_N4Bias_Denoised_cropped_registered_T2w_6_log.txt" "_Labels.nii.gz" \
+"_hypothalamus.nii.gz" "_sub-06_N4Bias_Denoised_cropped_registered_T2w_2_log.txt" \
+"_sub-35_N4Bias_Denoised_cropped_registered_T2w_7_log.txt" \
+"_TargetMaskImageMajorityVoting.nii.gz" "_mosaic.png" \
+"_sub-21_N4Bias_Denoised_cropped_registered_T2w_3_log.txt" \
+"_sub-40_N4Bias_Denoised_cropped_registered_T2w_8_log.txt" \
+"_TargetMaskImageMajorityVoting_Mask.nii.gz" "_resampled_Labels.nii.gz" \
+"_sub-22_N4Bias_Denoised_cropped_registered_T2w_4_log.txt" \
+"_sub-48_N4Bias_Denoised_cropped_registered_T2w_9_log.txt" \
+"_denoised_bias-corrected_cropped_T2w.nii.gz" \
+"_sub-04_N4Bias_Denoised_cropped_registered_T2w_0_log.txt" \
+"_sub-25_N4Bias_Denoised_cropped_registered_T2w_5_log.txt" "_volumes.csv")
 
-sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/atlases/7T/sub-P0016_whole_T2w.nii.gz -o /tmp -x 7 -w T2w
+sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/test_T2w.nii.gz -o /tmp -x 7 -w T2w
 
 for out_file in ${out_T2w_files_suffix[@]}
 do
-    sub_out_file=sub-P0016${out_file}
-    if [ -f /tmp/sub-P0016/${sub_out_file} ] 
+    sub_out_file=test${out_file}
+    if [ -f /tmp/test/${sub_out_file} ] 
     then
         echo "[DEBUG] Test OK: Regular output file ($sub_out_file) exists."
     else
@@ -183,7 +188,7 @@ do
     fi
 done
 
-seg_vols=$( cat /tmp/sub-P0016/sub-P0016_volumes.csv | cut -d "," -f 7 | tail -n 4 )
+seg_vols=$( cat /tmp/test/test_volumes.csv | cut -d "," -f 7 | tail -n 4 )
 
 for seg_vol in ${seg_vols[@]}
 do 
