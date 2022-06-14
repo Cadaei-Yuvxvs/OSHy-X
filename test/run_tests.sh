@@ -174,7 +174,7 @@ out_T2w_files_suffix=("_Intensity.nii.gz" "_fornix.nii.gz" \
 "_sub-04_N4Bias_Denoised_cropped_registered_T2w_0_log.txt" \
 "_sub-25_N4Bias_Denoised_cropped_registered_T2w_5_log.txt" "_volumes.csv")
 
-sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/test_T2w.nii.gz -o /tmp -x 7 -w T2w
+sudo docker run --memory-swap -1 -v /tmp:/tmp $container -t /OSHy/test_T2w.nii.gz -o /tmp -w T2w
 
 for out_file in ${out_T2w_files_suffix[@]}
 do
