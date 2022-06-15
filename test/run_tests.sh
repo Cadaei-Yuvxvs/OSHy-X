@@ -192,7 +192,7 @@ seg_vols=$( cat /tmp/test/test_volumes.csv | cut -d "," -f 7 | tail -n 4 )
 
 for seg_vol in ${seg_vols[@]}
 do 
-    if [ $(echo "($seg_vol > 100) && ($seg_vol < 700)" | bc -l) -eq 1 ]
+    if [ $(echo "($seg_vol > 50) && ($seg_vol < 700)" | bc -l) -eq 1 ]
     then 
         echo "[DEBUG] Test OK: Segmented volume ($seg_vol) is within normal parameters."
     else 
