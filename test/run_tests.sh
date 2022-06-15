@@ -200,5 +200,3 @@ do
         exit 1
     fi
 done
-
-sudo rm -r /tmp/sub-P0016
