@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """OSHy.py
-OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that 
-automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. 
+OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python 
+script that automatically segments the hypothalamus and fornix at 3T and 7T in 
+both T1w and T2w scans. 
 
 OSHy.py is designed to only run inside a container.
 """
@@ -476,9 +477,9 @@ def convert_to_bool(b_str:str):
 if __name__ == "__main__":
 
     print(
-        "\nOSHy-X v0.3\n"\
+        "\nOSHy-X v0.4\n"\
         "MIT License\n"
-        "Copyright (c) 2021 Jeryn Chang\n"
+        "Copyright (c) 2022 Jeryn Chang\n"
         "Visit https://github.com/Cadaei-Yuvxvs/OSHy-X for more information.\n")
 
     my_args = argparse.ArgumentParser()

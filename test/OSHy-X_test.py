@@ -1,6 +1,6 @@
 import pytest
 from pytest_mock import mocker
-from OSHyX import *
+from OSHy import *
 
 # Test convert_to_bool
 @pytest.mark.parametrize("boolstrings", [
@@ -63,12 +63,12 @@ def test_convert_to_bool(boolstrings):
 ])
 def test_OSHy_data_tesla(mocker, tesla):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -85,12 +85,12 @@ def test_OSHy_data_tesla(mocker, tesla):
 ])
 def test_OSHy_data_tesla(mocker, tesla):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -106,12 +106,12 @@ def test_OSHy_data_tesla(mocker, tesla):
 ])
 def test_OSHy_data_weighting(mocker, weighting):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -135,12 +135,12 @@ def test_OSHy_data_weighting(mocker, weighting):
 ])
 def test_OSHy_data_weighting(mocker, weighting, expected_weighting):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -156,12 +156,12 @@ def test_OSHy_data_weighting(mocker, weighting, expected_weighting):
 ])
 def test_OSHy_data_bimodal(mocker, bimodal):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -178,12 +178,12 @@ def test_OSHy_data_bimodal(mocker, bimodal):
 ])
 def test_OSHy_data_bimodal(mocker, bimodal):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -200,12 +200,12 @@ def test_OSHy_data_bimodal(mocker, bimodal):
 ])
 def test_OSHy_data_crop(mocker, crop):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -223,12 +223,12 @@ def test_OSHy_data_crop(mocker, crop):
 ])
 def test_OSHy_data_bimodal(mocker, crop, expected_crop):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -244,12 +244,12 @@ def test_OSHy_data_bimodal(mocker, crop, expected_crop):
 @pytest.fixture
 def bimodal_OSHy_data(mocker):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -263,12 +263,12 @@ def bimodal_OSHy_data(mocker):
 @pytest.fixture
 def unimodal_OSHy_data(mocker):
     mocker.patch(
-        'OSHyX.ants.image_read',
+        'OSHy.ants.image_read',
         return_value="An ANTsImage object"
     )
 
     mocker.patch(
-        'OSHyX.glob.glob',
+        'OSHy.glob.glob',
         return_value=["image.nii.gz" for i in range(10)]
     )
 
@@ -293,15 +293,15 @@ def unimodal_OSHy_data(mocker):
         ("sub-XX_T1w.nii.gz", " output ", "output/sub-XX"),
     ])
 def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     my_image = Target_img(img_file = img_filename, 
                         crop = True,
@@ -326,15 +326,15 @@ def test_Target_img(mocker,img_filename,out_dir,expected_sub_outdir,bimodal_OSHy
         (True, False, True, "denoised_cropped_")
     ])
 def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
                         crop = crop,
@@ -358,15 +358,15 @@ def test_Target_img(mocker,denoise,b1_bias,crop,expected_preprocess,bimodal_OSHy
     ('t2W','T2w')
 ])
 def test_Target_img(mocker,weighting,expected_weighting,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
                         crop = True,
@@ -384,15 +384,15 @@ def test_Target_img(mocker,weighting,expected_weighting,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
 def test_Target_img(mocker,img_file,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = img_file, 
@@ -410,15 +410,15 @@ def test_Target_img(mocker,img_file,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
 def test_Target_img(mocker,out_dir,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
@@ -436,15 +436,15 @@ def test_Target_img(mocker,out_dir,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],True,False,""
     ])
 def test_Target_img(mocker,weighting,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
@@ -462,15 +462,15 @@ def test_Target_img(mocker,weighting,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],""
     ])
 def test_Target_img(mocker,crop,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
@@ -488,15 +488,15 @@ def test_Target_img(mocker,crop,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],""
     ])
 def test_Target_img(mocker,denoise,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
@@ -514,15 +514,15 @@ def test_Target_img(mocker,denoise,bimodal_OSHy_data):
         1,2.0,{'file'},('file'),['file'],""
     ])
 def test_Target_img(mocker,b1_bias,bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     with pytest.raises(Exception) as error_info:
         my_image = Target_img(img_file = "sub-XX_T1w.nii.gz", 
@@ -593,15 +593,15 @@ def test_Target_img(mocker,b1_bias,bimodal_OSHy_data):
 def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
                           b1_bias,crop,out_dir,weight,expected_outdir,
                           expected_target):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
 
     my_image = Target_img(img_file = img_filename, 
                         crop = crop,
@@ -649,15 +649,15 @@ def test_run_JLF2_bimodal(mocker, bimodal_OSHy_data,img_filename,denoise,
     )
 
 def test_run_JLF2_unimodal(mocker, unimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
     my_image = Target_img(img_file = 'sub-XX_T1w.nii.gz', 
                         crop = True,
                         weighting = 'T1w',
@@ -694,16 +694,16 @@ def test_run_JLF2_unimodal(mocker, unimodal_OSHy_data):
     )
 
 def test_create_mosaic(mocker, bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.plot', return_value=None)
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.plot', return_value=None)
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
@@ -725,17 +725,17 @@ def test_create_mosaic(mocker, bimodal_OSHy_data):
         filename="output/sub-XX/sub-XX_mosaic.png")
 
 def test_calc_volume(mocker, bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.plot', return_value=None)
-    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.plot', return_value=None)
+    mocker.patch('OSHy.glob.glob', return_value=["globbed"])
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
@@ -764,18 +764,18 @@ def test_calc_volume(mocker, bimodal_OSHy_data):
             stderr=subprocess.STDOUT)
 
 def test_resample_segmentation(mocker, bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.plot', return_value=None)
-    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
-    mocker.patch('OSHyX.ants.resample_image_to_target', return_value="Resampled to target!")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.plot', return_value=None)
+    mocker.patch('OSHy.glob.glob', return_value=["globbed"])
+    mocker.patch('OSHy.ants.resample_image_to_target', return_value="Resampled to target!")
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
@@ -806,19 +806,19 @@ def test_resample_segmentation(mocker, bimodal_OSHy_data):
     )
 
 def test_threshold_structures(mocker, bimodal_OSHy_data):
-    mocker.patch('OSHyX.os.path.exists', return_value=True)
-    mocker.patch('OSHyX.ants.image_write', return_value=None)
-    mocker.patch('OSHyX.ants.image_read', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.denoise_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
-    mocker.patch('OSHyX.os.remove', return_value=None)
-    mocker.patch('OSHyX.ants.registration', return_value={'invtransforms':[]})
-    mocker.patch('OSHyX.ants.apply_transforms', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.crop_image', return_value="An ANTsImage object")
-    mocker.patch('OSHyX.ants.threshold_image', return_value="Thresholded target!")
-    mocker.patch('OSHyX.ants.plot', return_value=None)
-    mocker.patch('OSHyX.glob.glob', return_value=["globbed"])
-    mocker.patch('OSHyX.ants.resample_image_to_target', return_value="Resampled to target!")
+    mocker.patch('OSHy.os.path.exists', return_value=True)
+    mocker.patch('OSHy.ants.image_write', return_value=None)
+    mocker.patch('OSHy.ants.image_read', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.denoise_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.subprocess.Popen', return_value=subprocess.Popen(["echo", "Hello World!"]))
+    mocker.patch('OSHy.os.remove', return_value=None)
+    mocker.patch('OSHy.ants.registration', return_value={'invtransforms':[]})
+    mocker.patch('OSHy.ants.apply_transforms', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.crop_image', return_value="An ANTsImage object")
+    mocker.patch('OSHy.ants.threshold_image', return_value="Thresholded target!")
+    mocker.patch('OSHy.ants.plot', return_value=None)
+    mocker.patch('OSHy.glob.glob', return_value=["globbed"])
+    mocker.patch('OSHy.ants.resample_image_to_target', return_value="Resampled to target!")
 
     my_image = Target_img(img_file = "sub-XX.nii.gz", 
                         crop = True,
