@@ -85,7 +85,7 @@ Segmentation of small structures of the brain including the hypothalamus and for
 
 ## Atlas
 
-Twenty atlases were derived from manual segmentation of the hypothalamus-fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2022].
+Twenty atlases were derived from manual segmentation of the hypothalamus and fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2022].
 
 ## Tool
 
@@ -105,7 +105,7 @@ Dice overlaps (\autoref{fig:3}) and ICC (Intraclass Correlation; 2-way fixed-rat
 
 ![Dice overlaps between two raters for the left and right lobes of the hypothalamus and fornix. The median Dice’s coefficient for the left and right hypothalamus is 0.94 (0.01 IQR) and 0.96 (0.03 IQR). The median Dice’s coefficient for the left and right fornix are 0.91 (0.06 IQR) and 0.91 (0.03 IQR).\label{fig:3}](../Media/OSHy-X_figure_3.png){ width=70% }
 
-`FreeSurfer` (v7.2) also offers segmentation of both the hypothalamus [@Billot:2020] and fornix [@Fischl:2002] – The `recon-all` command segments the hypothalamus by default. We found that `JLF` has higher Dice overlaps with the manual segmentations at both 3T and 7T (\autoref{fig:4}). Similarly, Dice overlaps for the fornix are significantly higher for JLF at both 3T and 7T (\autoref{fig:4}); however, it should be noted that `FreeSurfer` does not segment the fornix by default.  Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T and 7T field strengths. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
+`FreeSurfer` (v7.2) also offers segmentation of both the hypothalamus [@Billot:2020] and fornix [@Fischl:2002]; however segmentation of both structure is not performed by default in the `recon-all` command. We found that `JLF` has higher Dice overlaps with the manual segmentations at both 3T and 7T (\autoref{fig:4}). Similarly, Dice overlaps for the fornix are significantly higher for JLF at both 3T and 7T (\autoref{fig:4}).  Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T and 7T field strengths. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
 
 ![Dice overlaps with manual segmentations for `JLF` with whole-brain priors, and FreeSurfer segmentations. For hypothalamic segmentation, median Dice's coefficients at 3T and 7T for JLF: 0.82 (0.04 IQR) and 0.83 (0.06 IQR); Freesurfer: 0.72 (0.03 IQR) and 0.72 (0.05 IQR). For fornix segmentation, median Dice's coefficients at 3T and 7T for JLF: 0.76 (0.04) and 0.77 (0.04); FreeSurfer: 0.01 (0.03) and 0.02 (0.03). For both structures at both field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; ***p<0.0005 and **p<0.005).\label{fig:4}](../Media/OSHy-X_figure_4.png){ width=75% }
 
