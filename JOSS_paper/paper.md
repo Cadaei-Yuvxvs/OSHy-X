@@ -3,7 +3,7 @@ title: 'Open-Source Hypothalamic-ForniX (OSHy-X) Atlases and Segmentation Tool f
 tags:
   - Python
   - Docker
-  - Singularity
+  - Apptainer
   - ANTs
   - MRI
   - Segmentation
@@ -91,7 +91,7 @@ Twenty atlases were derived from manual segmentation of the hypothalamus and for
 
 A summary of the pipeline is illustrated in \autoref{fig:1}. The user can specify the contrast (T1w/T2w) of the atlases used, the field strength (3T/7T) and any pre-processing steps. `OSHy-X` utilises Joint Label Fusion (`JLF`) [@Wang:2013] from Advanced Normalization Tools (`ANTs`; v2.3.1) for the registration [@Avants:2008] of atlases and segmentation of the target image. B1+ bias field inhomogeneity correction is performed using `MriResearchTools` (v0.5.2). Denoising and cropping are performed using ANTs in Python (`ANTsPy`; v0.2.0).
 
-![Pipeline overview of the OSHy-X segmentation tool. Users input a target image via an one-line command, and the pipeline produces hypothalamus and fornix labels, their volumes, and a mosaic visualisation of the segmentations. The pipeline and data are encapsulated within a Docker or Singularity container.\label{fig:1}](../Media/OSHy-X_figure_1.png)
+![Pipeline overview of the OSHy-X segmentation tool. Users input a target image via an one-line command, and the pipeline produces hypothalamus and fornix labels, their volumes, and a mosaic visualisation of the segmentations. The pipeline and data are encapsulated within a Docker or Apptainer container.\label{fig:1}](../Media/OSHy-X_figure_1.png)
 
 \newpage
 
@@ -111,7 +111,7 @@ Dice overlaps (\autoref{fig:3}) and ICC (Intraclass Correlation; 2-way fixed-rat
 
 # Availability
 
-The `OSHy-X` atlas is freely available at (https://osf.io/zge9t) and the tool is available via the `Neurodesk` data analysis environment (https://neurodesk.github.io) or as a `Docker`/`Singularity` container (https://github.com/Cadaei-Yuvxvs/OSHy-X ).
+The `OSHy-X` atlas is freely available at (https://osf.io/zge9t) and the tool is available via the `Neurodesk` data analysis environment (https://neurodesk.github.io) or as a `Docker`/`Apptainer` container (https://github.com/Cadaei-Yuvxvs/OSHy-X ).
 
 # Acknowledgements
 

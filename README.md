@@ -12,7 +12,7 @@ OSHy-X is currently [under review](https://github.com/openjournals/joss-reviews/
 
 ## Installation
 
-You have the option of running OSHy-X via NeuroDesk, a Docker container by itself, or a Singularity container. OSHy-X (and `OSHy.py`) is not designed to run outside of a container.
+You have the option of running OSHy-X via NeuroDesk, a Docker container by itself, or an Apptainer. OSHy-X (and `OSHy.py`) is not designed to run outside of a container.
 
 ### Neurodesk
 
@@ -28,16 +28,16 @@ To pull the container. Or run:
 
 `docker run --rm -v /path/to/data/folder/:/data/ jerync/oshyx_0.4:20220614 --target /data/input_file.nii.gz --outdir /data/output_directory`
 
-### Singularity
-1. Install Singularity [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html).
+### Apptainer (formerly Singularity)
+1. Install Apptainer [here](http://apptainer.org/docs/user/main/quick_start.html#quick-installation-steps).
 2. Open a terminal and run 
-`singularity pull oshyx_0.4.sif docker://jerync/oshyx_0.4`
-To pull the container. 
+`apptainer build oshyx_0.4.sif docker://jerync/oshyx_0.4:20220614`
+to build the container. 
 
 ## Usage
 
 
-### Docker and Singularity
+### Docker and Apptainer
 
 ```
 Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.4:20220614 
@@ -45,7 +45,7 @@ Usage: docker run --rm -v /path/to/data:/data jerync/oshyx_0.4:20220614
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
 
-       singularity run -B /path/to/data:/data oshyx_0.4.sif 
+       apptainer run --bind /path/to/data:/data oshyx_0.4.sif 
                [-h] -t TARGET [TARGET ...] -o OUTDIR [-c CROP] [-w WEIGHTING]
                [-d DENOISE] [-f FIELDCORRECTION] [-m MOSAIC] [-x TESLA]
                [-b BIMODAL] [-n NTHREADS]
