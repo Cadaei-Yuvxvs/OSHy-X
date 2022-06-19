@@ -55,7 +55,7 @@ affiliations:
    index: 8
  - name: CSIRO Health and Biosecurity, The Australian eHealth Research Centre, Brisbane, Australia
    index: 9
-date: 11 April 2022
+date: 19 June 2022
 bibliography: paper.bib
 ---
 
@@ -69,8 +69,8 @@ segmentation for 3T and 7T. The atlases are based on 20 manual segmentations,
 which we demonstrate have high interrater agreement. The versatility of the 
 `OSHy-X` tool allows segmentation and volumetric analysis of the hypothalamus
 and fornix from MRI scans. We also demonstrate that `OSHy-X` segmentation 
-outperforms a deep-learning segmentation method for the hypothalamus 
-[@Billot:2020]. We have previously demonstrated the use of `OSHy-X` on a cohort 
+outperforms FreeSurfer segmentation of the hypothalamus 
+[@Billot:2020] and fornix [@Fischl:2002]. We have previously demonstrated the use of `OSHy-X` on a cohort 
 of 329 non-neurodegenerative control participants and 42 patients with ALS to 
 investigate reduced hypothalamic volume and its association with appetite, 
 hypermetabolism and weight loss [@Chang:2022].
@@ -85,7 +85,7 @@ Segmentation of small structures of the brain including the hypothalamus and for
 
 ## Atlas
 
-Twenty atlases were derived from manual segmentation of the hypothalamus-fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2022].
+Twenty atlases were derived from manual segmentation of the hypothalamus and fornix, conducted by two tracers familiar with the hypothalamus and fornix [@Chang:OSF]. Ten non-neurodegenerative disease participants and ten patients with ALS were selected at random from within the larger datasets of the EATT4MND and 7TEA studies for the tracing. Details of the acquisition parameters have been outlined previously [@Chang:2022].
 
 ## Tool
 
@@ -101,13 +101,13 @@ A summary of the pipeline is illustrated in \autoref{fig:1}. The user can specif
 
 ![Visualisation of segmentation performance between manual segmentation and `JLF`. The hypothalamus is shown in red and the fornix in blue. The first three rows show segmentation in coronal, sagittal and axial planes; a 3D rendering of the structures is illustrated in the fourth row. The difference between `JLF` and manual segmentation illustrates over-segmented (red) and under-segmented (green) areas.\label{fig:2}](../Media/OSHy-X_figure_2.png){ width=70% }
 
-Dice overlaps (\autoref{fig:3}) and (ICC; 2-way fixed-rater mixed effects model with single measurement) between the two raters indicate excellent segmentation accuracy. The left and right hypothalamus received scores of 0.90 (0.66-0.98 CI) and 0.91 (0.68-0.98 CI). The left and right fornix received scores of 0.97 (0.87-0.99 CI) and 0.68 (0.13-0.91 CI).
+Dice overlaps (\autoref{fig:3}) and ICC (Intraclass Correlation; 2-way fixed-rater mixed effects model with single measurement) between the two raters indicate excellent segmentation accuracy. The left and right hypothalamus received scores of 0.90 (0.66-0.98 CI) and 0.91 (0.68-0.98 CI). The left and right fornix received scores of 0.97 (0.87-0.99 CI) and 0.68 (0.13-0.91 CI).
 
 ![Dice overlaps between two raters for the left and right lobes of the hypothalamus and fornix. The median Dice’s coefficient for the left and right hypothalamus is 0.94 (0.01 IQR) and 0.96 (0.03 IQR). The median Dice’s coefficient for the left and right fornix are 0.91 (0.06 IQR) and 0.91 (0.03 IQR).\label{fig:3}](../Media/OSHy-X_figure_3.png){ width=70% }
 
-In comparison to a deep learning method for segmentation [@Billot:2020]  (available in `FreeSurfer` v7.2), we found that `JLF` has higher Dice overlaps with the manual segmentations for both 3T and 7T (\autoref{fig:4}). Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T, but significant performance benefits at 7T compared to the deep learning method. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
+`FreeSurfer` (v7.2) also offers segmentation of both the hypothalamus [@Billot:2020] and fornix [@Fischl:2002]; however the segmentation of both structures is not performed by default using the popular `recon-all` command. Overall, we found that `JLF` has higher Dice overlaps with the manual segmentations at both 3T and 7T (\autoref{fig:4}). Similarly, Dice overlaps for the fornix are significantly higher for JLF at both 3T and 7T (\autoref{fig:4}).  Additionally, we found that compared to cropped priors, whole-brain priors for `JLF` offers modest benefits to segmentation accuracy at 3T and 7T field strengths. While whole brain instead of cropped priors for `JLF` improves segmentation performance, computational time increases prohibitively.
 
-![Dice overlaps of `JLF` with whole-brain priors and deep learning hypothalamic segmentation methods with manual segmentations. The median Dice’s coefficient for `JLF` with 3T and 7T inputs are 0.82 (0.04 IQR) and 0.83 (0.06 IQR). The median Dice’s coefficient for the deep learning method with 3T and 7T inputs are 0.72 (0.03 IQR) and 0.72 (0.05 IQR). In both 3T and 7T field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; p<0005 and p<0.005).\label{fig:4}](../Media/OSHy-X_figure_4.png){ width=70% }
+![Dice overlaps with manual segmentations for `JLF` with whole-brain priors, and FreeSurfer segmentations. For hypothalamic segmentation, median Dice's coefficients at 3T and 7T for JLF: 0.82 (0.04 IQR) and 0.83 (0.06 IQR); Freesurfer: 0.72 (0.03 IQR) and 0.72 (0.05 IQR). For fornix segmentation, median Dice's coefficients at 3T and 7T for JLF: 0.76 (0.04) and 0.77 (0.04); FreeSurfer: 0.01 (0.03) and 0.02 (0.03). For both structures at both field strengths, `JLF` outperforms the deep learning method (Wilcoxon rank sum test; \*\*\*p<0.0005 and \*\*p<0.005).\label{fig:4}](../Media/OSHy-X_figure_4.png){ width=75% }
 
 # Availability
 
