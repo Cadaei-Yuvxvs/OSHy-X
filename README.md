@@ -1,10 +1,12 @@
 # Open Source Hypothalamic-ForniX (OSHy-X) Atlases and Segmentation Tool for 3T and 7T
 
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.04368/status.svg)](https://doi.org/10.21105/joss.04368)
+
 *Version 0.4*
 
 OSHy-X is an atlas repository (https://osf.io/zge9t) and containerised Python script that automatically segments the hypothalamus and fornix at 3T and 7T in both T1w and T2w scans. It is designed to only run inside a container. See [below for installation instructions](#Installation).
 
-OSHy-X is currently [under review](https://github.com/openjournals/joss-reviews/issues/4368) with the Journal of Open Source Software.
+OSHy-X is published in the Journal of Open Source Software. Read the paper [here](https://doi.org/10.21105/joss.04368).
 
 ![The user inputs a T1w or T2w image. They are given the options for denoising, B1 bias field correction and image cropping. After Joint Label Fusion, the given output are the label, volume and mosaic files.](Media/OSHy_figure_1.GIF "OSHy pipeline")
 
